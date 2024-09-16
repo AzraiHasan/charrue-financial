@@ -1,16 +1,21 @@
 <template>
-  <div class="cash-out-page">
-    <h1>Record Cash Out</h1>
+  <UCard>
+    <template #header>
+      <h1>Record Cash Out</h1>
+    </template>
+    <section class="cash-out-page">
 
-    <!-- Cash Out Form Component -->
-    <CashOutForm @submit="handleSubmit" />
+      <!-- Cash Out Form Component -->
+      <CashOutForm @submit="handleSubmit" />
 
-    <!-- Recent Cash Out Transactions -->
-    <div class="recent-transactions">
-      <h2>Recent Cash Out Transactions</h2>
-      <!-- TODO: Add component to display recent cash out entries -->
-    </div>
-  </div>
+      <!-- Recent Cash Out Transactions -->
+      <div class="recent-transactions">
+        <UDivider class="my-8" />
+        <h2>Recent Cash Out Transactions</h2>
+        <!-- TODO: Add component to display recent cash out entries -->
+      </div>
+    </section>
+  </UCard>
 </template>
 
 <script setup>

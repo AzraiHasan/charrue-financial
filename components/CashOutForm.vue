@@ -1,36 +1,26 @@
 <template>
   <form @submit.prevent="handleSubmit" class="cash-out-form">
-    <h2>Record Cash Out</h2>
 
-    <div class="form-group">
+    <div class="mb-4 form-group">
       <label for="date">Date:</label>
-      <input type="date" id="date" v-model="formData.date" required>
+      <UInput type="date" id="date" v-model="formData.date" required />
     </div>
 
-    <div class="form-group">
+    <div class="mb-4 form-group">
       <label for="amount">Amount:</label>
-      <input type="number" id="amount" v-model="formData.amount" min="0" step="0.01" required>
+      <UInput type="number" id="amount" v-model="formData.amount" min="0" step="0.01" required />
     </div>
-
-    <div class="form-group">
+    <div>
       <label for="category">Category:</label>
-      <select id="category" v-model="formData.category" required>
-        <option value="">Select a category</option>
-        <!-- TODO: Populate this list with actual categories -->
-        <option value="supplies">Supplies</option>
-        <option value="equipment">Equipment</option>
-        <option value="rent">Rent</option>
-        <option value="utilities">Utilities</option>
-        <option value="other">Other</option>
-      </select>
+      <USelect class="mb-4" v-model="country" :options="categories" />
     </div>
 
-    <div class="form-group">
+    <div class="mb-4 form-group">
       <label for="notes">Notes (optional):</label>
-      <textarea id="notes" v-model="formData.notes"></textarea>
+      <UTextarea id="notes" v-model="formData.notes" />
     </div>
 
-    <button type="submit" :disabled="!isFormValid">Record Cash Out</button>
+    <UButton type="submit" :disabled="!isFormValid">Record Cash Out</UButton>
   </form>
 </template>
 
@@ -43,6 +33,8 @@ const formData = ref({
   category: '',
   notes: ''
 })
+
+const categories = ['Ingredients', 'Supplies', 'Equipment', 'Rent', 'Utilities', 'salary', 'Other']
 
 const isFormValid = computed(() => {
   return formData.value.date && formData.value.amount > 0 && formData.value.category
@@ -57,7 +49,3 @@ const handleSubmit = () => {
   }
 }
 </script>
-
-<style scoped>
-/* TODO: Add styles for the form layout and elements */
-</style>
