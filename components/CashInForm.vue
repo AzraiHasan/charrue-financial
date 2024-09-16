@@ -1,6 +1,5 @@
 <template>
   <form @submit.prevent="handleSubmit" class="cash-in-form">
-    <h2>Record Cash In</h2>
 
     <div class="form-group">
       <label for="date">Date:</label>

@@ -13,8 +13,8 @@
     <UCard class="my-4">
       <h2>Quick Actions</h2>
       <section class="my-4">
-        <UButton class="mr-3">Cash In</UButton>
-        <UButton>Cash Out</UButton>
+        <UButton to="/cash-in" class="mr-3">Cash In</UButton>
+        <UButton to="/cash-out">Cash Out</UButton>
       </section>
     </UCard>
     <UCard>

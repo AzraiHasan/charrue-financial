@@ -1,7 +1,7 @@
 <template>
   <UCard>
     <template #header>
-      <div class="h-8">Header</div>
+      <UButton to="/" class="h-8">Dahsboard</UButton to="/">
     </template>
 
     <main>
