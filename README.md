@@ -1,5 +1,7 @@
 # Coconut Shake Financial Tracker
 
+## Project is under development, please refer TODO.md
+
 ## Overview
 
 The Coconut Shake Financial Tracker is a web-based application designed to help small business owners, specifically roadside coconut shake stall operators, manage and track their daily cash flow. This application provides an easy-to-use interface for recording income, expenses, and generating financial reports.
