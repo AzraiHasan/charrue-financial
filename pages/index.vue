@@ -1,3 +1,5 @@
+<!-- pages\index.vue -->
+
 <template>
   <div>
     <h1>Welcome to Coconut Shake Financial Tracker</h1>

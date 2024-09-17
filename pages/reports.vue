@@ -1,3 +1,5 @@
+<!-- pages/reports.vue -->
+
 <template>
   <div class="reports-page">
     <h1>Financial Reports</h1>

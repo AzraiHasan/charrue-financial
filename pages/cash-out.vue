@@ -1,3 +1,5 @@
+<!-- pages/cash-out.vue -->
+
 <template>
   <UCard>
     <template #header>

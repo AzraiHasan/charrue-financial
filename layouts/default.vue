@@ -1,3 +1,5 @@
+<!-- layouts/default.vue -->
+
 <template>
   <UCard>
     <template #header>

@@ -1,3 +1,5 @@
+<!-- components/CashOutForm.vue -->
+
 <template>
   <form @submit.prevent="handleSubmit" class="cash-out-form">
 

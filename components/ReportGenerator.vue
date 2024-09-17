@@ -1,3 +1,5 @@
+<!-- components/ReportGenerator.vue -->
+
 <template>
   <div class="report-generator">
     <h2>Financial Report Generator</h2>

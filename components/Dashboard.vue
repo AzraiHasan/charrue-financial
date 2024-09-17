@@ -1,3 +1,5 @@
+<!-- components/Dashboard.vue -->
+
 <template>
   <UCard>
     <template #header>

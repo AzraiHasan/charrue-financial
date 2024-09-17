@@ -1,83 +1,82 @@
-# TODO List for Coconut Shake Financial Tracker
+# Coconut Shake Financial Tracker - TODO List
 
-## Utils
+## Database and Backend Setup
+- [ ] Implement IndexedDB setup in `utils/db.js`
+- [ ] Create database schemas for cash-in, cash-out, and categories
+- [ ] Implement CRUD operations in `utils/db.js`
+- [ ] Set up error handling and connection status checks in `utils/db.js`
 
-### db.js
-1. [ ] Set up IndexedDB connection
-2. [ ] Create database schema (object stores for cash in, cash out, categories)
-3. [ ] Implement CRUD operations for each object store
-4. [ ] Add error handling and connection status checks
-5. [ ] Create utility functions for common database queries
+## API Routes
+- [ ] Implement cash-in API routes in `server/api/cashIn.js`
+- [ ] Implement cash-out API routes in `server/api/cashOut.js`
+- [ ] Add input validation for API routes
+- [ ] Implement error handling for API routes
 
-### dateHelpers.js
-1. [ ] Implement function to format dates (YYYY-MM-DD)
-2. [ ] Create function to calculate date ranges (e.g., for weekly/monthly reports)
-3. [ ] Add utility to determine fiscal periods (if applicable)
-4. [ ] Implement function to validate date inputs
+## Authentication
+- [ ] Implement token-based authentication in `server/middleware/auth.js`
+- [ ] Create utility functions for token generation and validation
+- [ ] Integrate authentication with API routes
 
 ## Stores
+- [ ] Complete implementation of `cashInStore.js`
+- [ ] Complete implementation of `cashOutStore.js`
+- [ ] Complete implementation of `categoryStore.js`
+- [ ] Integrate stores with API calls
 
-### categoryStore.js
-1. [ ] Define initial state for categories
-2. [ ] Implement action to fetch categories from the database
-3. [ ] Add action to create new categories
-4. [ ] Create action to update existing categories
-5. [ ] Implement action to delete categories (with safeguards)
-6. [ ] Add getters for filtered or sorted categories
+## Components
+- [ ] Finish implementation of `CashInForm.vue`
+- [ ] Finish implementation of `CashOutForm.vue`
+- [ ] Implement `Dashboard.vue` with charts and summaries
+- [ ] Create `RecentTransactions.vue` component for displaying recent entries
+- [ ] Enhance `ReportGenerator.vue` with various report types
 
-### cashInStore.js
-1. [ ] Define initial state for cash in transactions
-2. [ ] Implement action to fetch cash in entries from the database
-3. [ ] Add action to create new cash in entries
-4. [ ] Create action to update existing cash in entries
-5. [ ] Implement action to delete cash in entries
-6. [ ] Add getters for filtered transactions (by date range, amount, etc.)
-7. [ ] Implement getter for total cash in over a specified period
+## Pages
+- [ ] Complete `index.vue` (Home page) with dashboard and quick actions
+- [ ] Finish `cash-in.vue` page with form and recent transactions
+- [ ] Finish `cash-out.vue` page with form and recent transactions
+- [ ] Implement `reports.vue` page with report generation and display
 
-### cashOutStore.js
-1. [ ] Define initial state for cash out transactions
-2. [ ] Implement action to fetch cash out entries from the database
-3. [ ] Add action to create new cash out entries
-4. [ ] Create action to update existing cash out entries
-5. [ ] Implement action to delete cash out entries
-6. [ ] Add getters for filtered transactions (by date range, amount, category, etc.)
-7. [ ] Implement getter for total cash out over a specified period
-8. [ ] Create getter for cash out grouped by category
+## Utilities
+- [ ] Implement date formatting and manipulation functions in `utils/dateHelpers.js`
+- [ ] Create utility functions for financial calculations (e.g., totals, averages)
 
-## Server
+## Data Visualization
+- [ ] Integrate Chart.js or another charting library
+- [ ] Create reusable chart components for different report types
 
-### api/cashIn.js
-1. [ ] Set up Express router for cash in endpoints
-2. [ ] Implement GET endpoint to retrieve all cash in entries
-3. [ ] Add POST endpoint to create a new cash in entry
-4. [ ] Create PUT endpoint to update an existing cash in entry
-5. [ ] Implement DELETE endpoint to remove a cash in entry
-6. [ ] Add validation middleware for request bodies
-7. [ ] Implement error handling for all endpoints
+## Testing
+- [ ] Set up a testing framework (e.g., Vitest for Vue components)
+- [ ] Write unit tests for utility functions
+- [ ] Write unit tests for store actions and getters
+- [ ] Create integration tests for API routes
+- [ ] Implement end-to-end tests for critical user flows
 
-### api/cashOut.js
-1. [ ] Set up Express router for cash out endpoints
-2. [ ] Implement GET endpoint to retrieve all cash out entries
-3. [ ] Add POST endpoint to create a new cash out entry
-4. [ ] Create PUT endpoint to update an existing cash out entry
-5. [ ] Implement DELETE endpoint to remove a cash out entry
-6. [ ] Add validation middleware for request bodies
-7. [ ] Implement error handling for all endpoints
+## Performance Optimization
+- [ ] Implement lazy loading for routes and components
+- [ ] Optimize database queries for large datasets
+- [ ] Add caching mechanisms for frequently accessed data
 
-### middleware/auth.js
-1. [ ] Implement user authentication logic (e.g., JWT validation)
-2. [ ] Create middleware to protect routes that require authentication
-3. [ ] Add error handling for authentication failures
-4. [ ] Implement role-based access control (if applicable)
-5. [ ] Create utility functions for token generation and validation
+## User Experience Enhancements
+- [ ] Implement form validation with error messages
+- [ ] Add loading indicators for async operations
+- [ ] Create a responsive design for mobile devices
+- [ ] Implement dark mode toggle
 
-## General Tasks
-1. [ ] Ensure consistent error handling across all modules
-2. [ ] Implement logging system for debugging and monitoring
-3. [ ] Write unit tests for utilities, stores, and API endpoints
-4. [ ] Set up continuous integration for automated testing
-5. [ ] Document API endpoints and store actions
-6. [ ] Perform security audit of implemented features
-7. [ ] Optimize database queries and store actions for performance
+## Documentation
+- [ ] Write API documentation for backend routes
+- [ ] Create user guide for the application
+- [ ] Document component props and events
+- [ ] Add inline code comments for complex logic
 
-Remember to update this TODO list as you progress through development and new tasks or considerations arise.
+## Deployment
+- [ ] Set up a production build process
+- [ ] Configure environment variables for different deployment stages
+- [ ] Create a deployment pipeline (e.g., using GitHub Actions)
+
+## Future Enhancements
+- [ ] Implement multi-user support with role-based access control
+- [ ] Add data export functionality (CSV, PDF)
+- [ ] Create a simple inventory tracking system
+- [ ] Implement sales forecasting based on historical data
+
+Remember to update this TODO list as you progress through the project and new tasks or requirements arise.
