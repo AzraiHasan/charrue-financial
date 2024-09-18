@@ -55,16 +55,11 @@ export function useDatabase() {
     }
   };
 
-  function serializeData(data) {
-    return JSON.parse(JSON.stringify(data));
-  }
-
   const addItem = async (storeName, item) => {
     const db = await initDB();
     const tx = db.transaction(storeName, "readwrite");
     const store = tx.objectStore(storeName);
-    console.log(`Adding item to ${storeName}:`, serializeData(item));
-    const id = await store.add(serializeData(item));
+    const id = await store.add(item);
     await tx.done;
     console.log(`Item added successfully to ${storeName}. ID: ${id}`);
     return id;

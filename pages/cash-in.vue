@@ -13,7 +13,8 @@
       <!-- Recent Cash In Transactions -->
       <div class="recent-transactions">
         <UDivider class="my-8" />
-        <TransactionList />
+        <h2>[TODO] Recent Cash In Transactions</h2>
+        <!-- TODO: Implement component for displaying recent cash in transactions -->
       </div>
     </section>
   </UCard>

@@ -2,62 +2,88 @@
 
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-// TODO: Import utility functions from db.js and dateHelpers.js as needed
+import { useDatabase } from "@/composables/useDatabase";
 
 export const useCashOutStore = defineStore("cashOut", () => {
-  // State
+  const { STORES, addItem, getAllItems } = useDatabase();
+
   const cashOutTransactions = ref([]);
   const isLoading = ref(false);
   const error = ref(null);
-
-  // Getters
-  const totalCashOut = computed(() => {
-    // TODO: Implement logic to calculate total cash out
-  });
-
-  const getCashOutByDateRange = computed(() => (startDate, endDate) => {
-    // TODO: Implement logic to filter cash out by date range
-  });
-
-  const getCashOutByCategory = computed(() => (category) => {
-    // TODO: Implement logic to filter cash out by category
-  });
-
-  // Actions
-  const fetchCashOutEntries = async () => {
-    // TODO: Implement fetching cash out entries from the database
-  };
+  const lastFetchTimestamp = ref(null);
 
   const addCashOutEntry = async (entry) => {
-    // TODO: Implement adding a new cash out entry
+    if (isLoading.value) return; // Prevent concurrent additions
+    isLoading.value = true;
+    error.value = null;
+    try {
+      console.log("Adding cash-out entry:", entry);
+      const id = await addItem(STORES.CASH_OUT, entry);
+      console.log("Cash-out entry added with ID:", id);
+      cashOutTransactions.value = [
+        { ...entry, id },
+        ...cashOutTransactions.value,
+      ];
+      return id;
+    } catch (err) {
+      error.value = err.message;
+      console.error("Error adding cash-out entry:", err);
+      throw err;
+    } finally {
+      isLoading.value = false;
+    }
   };
 
-  const updateCashOutEntry = async (id, updates) => {
-    // TODO: Implement updating an existing cash out entry
+  const fetchCashOutEntries = async (forceRefresh = false) => {
+    if (
+      !forceRefresh &&
+      cashOutTransactions.value.length > 0 &&
+      lastFetchTimestamp.value &&
+      Date.now() - lastFetchTimestamp.value < 60000
+    ) {
+      console.log("Using cached cash-out entries");
+      return;
+    }
+
+    if (isLoading.value) {
+      console.log("Fetch already in progress");
+      return;
+    }
+
+    isLoading.value = true;
+    error.value = null;
+    try {
+      console.log("Fetching cash-out entries from IndexedDB");
+      const items = await getAllItems(STORES.CASH_OUT);
+      cashOutTransactions.value = items.sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+      lastFetchTimestamp.value = Date.now();
+      console.log(
+        "Fetched and sorted cash-out entries:",
+        cashOutTransactions.value
+      );
+    } catch (err) {
+      error.value = err.message;
+      console.error("Error fetching cash-out entries:", err);
+    } finally {
+      isLoading.value = false;
+    }
   };
 
-  const deleteCashOutEntry = async (id) => {
-    // TODO: Implement deleting a cash out entry
-  };
-
-  const getCashOutSummaryByCategory = async (startDate, endDate) => {
-    // TODO: Implement logic to get cash out summary grouped by category
-  };
+  const totalCashOut = computed(() => {
+    return cashOutTransactions.value.reduce(
+      (sum, transaction) => sum + transaction.amount,
+      0
+    );
+  });
 
   return {
-    // State
     cashOutTransactions,
     isLoading,
     error,
-    // Getters
-    totalCashOut,
-    getCashOutByDateRange,
-    getCashOutByCategory,
-    // Actions
-    fetchCashOutEntries,
     addCashOutEntry,
-    updateCashOutEntry,
-    deleteCashOutEntry,
-    getCashOutSummaryByCategory,
+    fetchCashOutEntries,
+    totalCashOut,
   };
 });

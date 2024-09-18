@@ -2,7 +2,6 @@
 
 <template>
   <form @submit.prevent="handleSubmit" class="cash-out-form">
-
     <div class="mb-4 form-group">
       <label for="date">Date:</label>
       <UInput type="date" id="date" v-model="formData.date" required />
@@ -12,22 +11,29 @@
       <label for="amount">Amount:</label>
       <UInput type="number" id="amount" v-model="formData.amount" min="0" step="0.01" required />
     </div>
-    <div>
+
+    <div class="mb-4 form-group">
       <label for="category">Category:</label>
-      <USelect class="mb-4" v-model="country" :options="categories" />
+      <USelect id="category" v-model="formData.category" :options="categories" required />
     </div>
 
     <div class="mb-4 form-group">
       <label for="notes">Notes (optional):</label>
       <UTextarea id="notes" v-model="formData.notes" />
     </div>
-
-    <UButton type="submit" :disabled="!isFormValid">Record Cash Out</UButton>
+    <div class="flex justify-end">
+      <UButton type="submit" :disabled="!isFormValid || isSubmitting" size="lg">Record Cash Out</UButton>
+    </div>
   </form>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useCashOutStore } from '@/stores/cashOutStore'
+
+const cashOutStore = useCashOutStore()
+
+const categories = ['Ingredients', 'Supplies', 'Equipment', 'Rent', 'Utilities', 'Salary', 'Other']
 
 const formData = ref({
   date: '',
@@ -36,18 +42,34 @@ const formData = ref({
   notes: ''
 })
 
-const categories = ['Ingredients', 'Supplies', 'Equipment', 'Rent', 'Utilities', 'salary', 'Other']
+const isSubmitting = ref(false)
 
 const isFormValid = computed(() => {
-  return formData.value.date && formData.value.amount > 0 && formData.value.category
+  return formData.value.date &&
+    formData.value.amount > 0 &&
+    formData.value.category
 })
 
-const handleSubmit = () => {
-  if (isFormValid.value) {
-    // TODO: Emit form data to parent component or handle submission logic
-    console.log('Form submitted:', formData.value)
-    // Reset form after submission
-    formData.value = { date: '', amount: '', category: '', notes: '' }
+const handleSubmit = async () => {
+  if (isFormValid.value && !isSubmitting.value) {
+    isSubmitting.value = true
+    try {
+      const entryData = {
+        date: formData.value.date,
+        amount: Number(formData.value.amount),
+        category: formData.value.category,
+        notes: formData.value.notes
+      }
+      console.log('Submitting cash-out form data:', entryData)
+      await cashOutStore.addCashOutEntry(entryData)
+      console.log('Cash-out form submission successful')
+      // Reset form after successful submission
+      formData.value = { date: '', amount: '', category: '', notes: '' }
+    } catch (error) {
+      console.error('Error submitting cash-out entry:', error)
+    } finally {
+      isSubmitting.value = false
+    }
   }
 }
 </script>
