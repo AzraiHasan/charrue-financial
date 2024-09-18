@@ -10,6 +10,7 @@ export const useCashInStore = defineStore("cashIn", () => {
   const cashInTransactions = ref([]);
   const isLoading = ref(false);
   const error = ref(null);
+  const lastFetchTimestamp = ref(null);
 
   // Getters
   const totalCashIn = computed(() => {
@@ -27,13 +28,37 @@ export const useCashInStore = defineStore("cashIn", () => {
   });
 
   // Actions
-  const fetchCashInEntries = async () => {
-    if (isLoading.value) return; // Prevent concurrent fetches
+  const fetchCashInEntries = async (forceRefresh = false) => {
+    // If data is already loaded and no force refresh, return early
+    if (
+      !forceRefresh &&
+      cashInTransactions.value.length > 0 &&
+      lastFetchTimestamp.value &&
+      Date.now() - lastFetchTimestamp.value < 60000
+    ) {
+      console.log("Using cached cash-in entries");
+      return;
+    }
+
+    if (isLoading.value) {
+      console.log("Fetch already in progress");
+      return;
+    }
+
     isLoading.value = true;
     error.value = null;
+
     try {
-      cashInTransactions.value = await getAllItems(STORES.CASH_IN);
-      console.log("Fetched cash-in entries:", cashInTransactions.value);
+      console.log("Fetching cash-in entries from IndexedDB");
+      const items = await getAllItems(STORES.CASH_IN);
+      cashInTransactions.value = items.sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      ); // Sort by date, newest first
+      lastFetchTimestamp.value = Date.now();
+      console.log(
+        "Fetched and sorted cash-in entries:",
+        cashInTransactions.value
+      );
     } catch (err) {
       error.value = err.message;
       console.error("Error fetching cash-in entries:", err);

@@ -17,8 +17,9 @@
       <label for="notes">Notes (optional):</label>
       <UTextarea id="notes" v-model="formData.notes" />
     </div>
-
-    <UButton type="submit" :disabled="!isFormValid || isSubmitting">Record Cash In</UButton>
+    <div class="flex justify-end">
+      <UButton type="submit" :disabled="!isFormValid || isSubmitting" size="lg">Record Cash In</UButton>
+    </div>
   </form>
 </template>
 

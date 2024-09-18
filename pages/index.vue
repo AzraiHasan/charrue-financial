@@ -2,22 +2,19 @@
 
 <template>
   <div>
-    <h1>Welcome to Coconut Shake Financial Tracker</h1>
     <!-- Quick overview section -->
     <section>
-      <h2 class="my-4">Financial Overview</h2>
-      <!-- TODO: Add Dashboard component -->
+      <div class="flex justify-end">
+        <UButton class="mr-4" to="/cash-in" size="lg">Cash In</UButton>
+        <UButton to="/cash-out" size="lg">Cash Out</UButton>
+      </div>
+    </section>
+
+    <section class="mt-3">
       <Dashboard />
     </section>
 
     <!-- Quick actions section -->
-    <UCard class="my-4">
-      <h2>Quick Actions</h2>
-      <section class="my-4">
-        <UButton to="/cash-in" class="mr-3">Cash In</UButton>
-        <UButton to="/cash-out">Cash Out</UButton>
-      </section>
-    </UCard>
     <UCard>
       <template #header>
         <!-- Recent transactions section -->

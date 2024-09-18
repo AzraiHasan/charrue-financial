@@ -13,8 +13,7 @@
       <!-- Recent Cash In Transactions -->
       <div class="recent-transactions">
         <UDivider class="my-8" />
-        <h2>Recent Cash In Transactions</h2>
-        <!-- TODO: Add component to display recent cash in entries -->
+        <TransactionList />
       </div>
     </section>
   </UCard>
@@ -23,6 +22,7 @@
 <script setup>
 import { ref } from 'vue'
 import CashInForm from '@/components/CashInForm.vue'
+import TransactionList from '~/components/TransactionList.vue';
 // TODO: Import necessary composables or stores
 
 // Reactive data for recent transactions
