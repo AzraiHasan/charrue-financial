@@ -7,6 +7,8 @@ coconut-shake-financial-tracker/
 │   ├── CashOutForm.vue       // Stubbed: Form for recording cash out transactions
 │   ├── Dashboard.vue         // Stubbed: Main dashboard component
 │   └── ReportGenerator.vue   // Stubbed: Component for generating financial reports
+├── composables/
+│   └── useDatabase.js        // Implemented: Database operations using IndexedDB
 ├── layouts/
 │   └── default.vue           // Stubbed: Default layout component
 ├── pages/
@@ -19,7 +21,7 @@ coconut-shake-financial-tracker/
 │   ├── cashOutStore.js       // Stubbed: Pinia store for cash out transactions
 │   └── categoryStore.js      // Stubbed: Pinia store for expense categories
 ├── utils/
-│   ├── db.js                 // Stubbed: Database utility functions
+│   ├── db.js                 // Stubbed: Database utility functions (may be removed in favor of useDatabase.js)
 │   └── dateHelpers.js        // Stubbed: Date manipulation utility functions
 ├── server/
 │   ├── api/
@@ -41,6 +43,8 @@ coconut-shake-financial-tracker/
 ## Directory Structure Explanation
 
 - `components/`: Reusable Vue components (all stubbed)
+- `composables/`: Vue 3 Composition API functions
+  - `useDatabase/`: Implemented database operations using IndexedDB
 - `layouts/`: Application layouts (default layout stubbed)
 - `pages/`: Main application pages (all stubbed, auto-routed by Nuxt)
 - `stores/`: Pinia stores for state management (all stubbed)

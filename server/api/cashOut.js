@@ -4,7 +4,7 @@
 // import { db } from '../utils/db'
 // import { validateCashOutData } from '../utils/validators'
 
-export default defineEventHandler(async (event) => {
+/* export default defineEventHandler(async (event) => {
   const method = event.method;
   const id = event.context.params?.id;
 
@@ -60,4 +60,4 @@ export default defineEventHandler(async (event) => {
     statusCode: 405,
     statusMessage: "Method Not Allowed",
   });
-});
+}); */

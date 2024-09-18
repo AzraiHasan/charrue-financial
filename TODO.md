@@ -1,10 +1,10 @@
 # Coconut Shake Financial Tracker - TODO List
 
 ## Database and Backend Setup
-- [ ] Implement IndexedDB setup in `utils/db.js`
+- [ ] Implement IndexedDB setup in `composables/useDatabase.js`
 - [ ] Create database schemas for cash-in, cash-out, and categories
-- [ ] Implement CRUD operations in `utils/db.js`
-- [ ] Set up error handling and connection status checks in `utils/db.js`
+- [ ] Implement CRUD operations in `composables/useDatabase.js`
+- [ ] Set up error handling and connection status checks in `composables/useDatabase.js`
 
 ## API Routes
 - [ ] Implement cash-in API routes in `server/api/cashIn.js`
