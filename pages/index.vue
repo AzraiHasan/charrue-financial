@@ -3,9 +3,6 @@
 <template>
   <div>
     <h1>Welcome to Coconut Shake Financial Tracker</h1>
-
-    <TestDatabase />
-
     <!-- Quick overview section -->
     <section>
       <h2 class="my-4">Financial Overview</h2>

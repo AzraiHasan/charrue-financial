@@ -18,12 +18,15 @@
       <UTextarea id="notes" v-model="formData.notes" />
     </div>
 
-    <UButton type="submit" :disabled="!isFormValid">Record Cash In</UButton>
+    <UButton type="submit" :disabled="!isFormValid || isSubmitting">Record Cash In</UButton>
   </form>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useCashInStore } from '@/stores/cashInStore'
+
+const cashInStore = useCashInStore()
 
 const formData = ref({
   date: '',
@@ -31,16 +34,31 @@ const formData = ref({
   notes: ''
 })
 
+const isSubmitting = ref(false)
+
 const isFormValid = computed(() => {
   return formData.value.date && formData.value.amount > 0
 })
 
-const handleSubmit = () => {
-  if (isFormValid.value) {
-    // TODO: Emit form data to parent component or handle submission logic
-    console.log('Form submitted: ', formData.value)
-    // Reset form after submission
-    formData.value = { date: '', amount: '', notes: '' }
+const handleSubmit = async () => {
+  if (isFormValid.value && !isSubmitting.value) {
+    isSubmitting.value = true
+    try {
+      const entryData = {
+        date: formData.value.date,
+        amount: Number(formData.value.amount),
+        notes: formData.value.notes
+      }
+      console.log('Submitting form data:', entryData)
+      await cashInStore.addCashInEntry(entryData)
+      console.log('Form submission successful')
+      // Reset form after successful submission
+      formData.value = { date: '', amount: '', notes: '' }
+    } catch (error) {
+      console.error('Error submitting cash-in entry:', error)
+    } finally {
+      isSubmitting.value = false
+    }
   }
 }
 </script>

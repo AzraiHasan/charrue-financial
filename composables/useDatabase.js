@@ -2,6 +2,9 @@
 
 import { openDB } from "idb";
 
+let dbInitialized = false;
+let dbInstance = null;
+
 export function useDatabase() {
   const DB_NAME = "CoconutShakeFinancialTracker";
   const DB_VERSION = 1;
@@ -12,9 +15,16 @@ export function useDatabase() {
   };
 
   const initDB = async () => {
+    if (dbInitialized) {
+      console.log("Database already initialized");
+      return dbInstance;
+    }
+
     try {
+      console.log("Initializing database...");
       const db = await openDB(DB_NAME, DB_VERSION, {
         upgrade(db) {
+          console.log("Upgrading database...");
           if (!db.objectStoreNames.contains(STORES.CASH_IN)) {
             db.createObjectStore(STORES.CASH_IN, {
               keyPath: "id",
@@ -36,6 +46,8 @@ export function useDatabase() {
         },
       });
       console.log("Database initialized successfully");
+      dbInitialized = true;
+      dbInstance = db;
       return db;
     } catch (error) {
       console.error("Error initializing database:", error);
@@ -43,12 +55,18 @@ export function useDatabase() {
     }
   };
 
+  function serializeData(data) {
+    return JSON.parse(JSON.stringify(data));
+  }
+
   const addItem = async (storeName, item) => {
     const db = await initDB();
     const tx = db.transaction(storeName, "readwrite");
     const store = tx.objectStore(storeName);
-    const id = await store.add(item);
+    console.log(`Adding item to ${storeName}:`, serializeData(item));
+    const id = await store.add(serializeData(item));
     await tx.done;
+    console.log(`Item added successfully to ${storeName}. ID: ${id}`);
     return id;
   };
 
@@ -57,7 +75,7 @@ export function useDatabase() {
     const tx = db.transaction(storeName, "readonly");
     const store = tx.objectStore(storeName);
     const items = await store.getAll();
-    await tx.done;
+    console.log(`Retrieved ${items.length} items from ${storeName}`);
     return items;
   };
 

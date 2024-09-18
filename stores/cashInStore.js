@@ -2,9 +2,10 @@
 
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-// TODO: Import utility functions from db.js and dateHelpers.js as needed
+import { useDatabase } from "@/composables/useDatabase";
 
 export const useCashInStore = defineStore("cashIn", () => {
+  const { STORES, addItem, getAllItems } = useDatabase();
   // State
   const cashInTransactions = ref([]);
   const isLoading = ref(false);
@@ -12,20 +13,60 @@ export const useCashInStore = defineStore("cashIn", () => {
 
   // Getters
   const totalCashIn = computed(() => {
-    // TODO: Implement logic to calculate total cash in
+    return cashInTransactions.value.reduce(
+      (total, transaction) => total + transaction.amount,
+      0
+    );
   });
 
   const getCashInByDateRange = computed(() => (startDate, endDate) => {
-    // TODO: Implement logic to filter cash in by date range
+    return cashInTransactions.value.filter((transaction) => {
+      const transactionDate = new Date(transaction.date);
+      return transactionDate >= startDate && transactionDate <= endDate;
+    });
   });
 
   // Actions
   const fetchCashInEntries = async () => {
-    // TODO: Implement fetching cash in entries from the database
+    if (isLoading.value) return; // Prevent concurrent fetches
+    isLoading.value = true;
+    error.value = null;
+    try {
+      cashInTransactions.value = await getAllItems(STORES.CASH_IN);
+      console.log("Fetched cash-in entries:", cashInTransactions.value);
+    } catch (err) {
+      error.value = err.message;
+      console.error("Error fetching cash-in entries:", err);
+    } finally {
+      isLoading.value = false;
+    }
   };
-
+  function serializeData(data) {
+    return JSON.parse(JSON.stringify(data));
+  }
   const addCashInEntry = async (entry) => {
-    // TODO: Implement adding a new cash in entry
+    if (isLoading.value) return; // Prevent concurrent additions
+    isLoading.value = true;
+    error.value = null;
+    try {
+      console.log("Adding cash-in entry:", entry);
+      const id = await addItem(STORES.CASH_IN, entry);
+      console.log("Entry added with ID:", id);
+      cashInTransactions.value.push({ ...entry, id });
+      return id;
+    } catch (err) {
+      error.value = err.message;
+      console.error("Error adding cash-in entry:", err);
+      throw err; // Rethrow to handle in the component
+    } finally {
+      isLoading.value = false;
+    }
+    /* const serializableEntry = serializeData({
+      date: entry.date,
+      amount: Number(entry.amount),
+      notes: entry.notes,
+    });
+    const id = await addItem(STORES.CASH_IN, serializableEntry); */
   };
 
   const updateCashInEntry = async (id, updates) => {
