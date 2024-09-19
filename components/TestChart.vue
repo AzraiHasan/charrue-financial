@@ -1,63 +1,30 @@
 <!-- components/TestChart.vue -->
 <template>
-  <div class="chart-container my-8">
-    <Line :data="chartData" :options="chartOptions" />
+  <div>
+    <!-- Chart Section -->
+    <div class="chart-container my-8">
+      <Line :data="chartData" :options="chartOptions" />
+    </div>
+    <div class="my-4">
+      <UButton block to="/cash-in" size="lg">Record Cash In</UButton>
+    </div>
   </div>
-
-  <div class="controls my-4">
-    <UButton block class="mr-4" to="/cash-in" size="lg">Record Cash In</UButton>
-  </div>
-
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useCashInStore } from '~/stores/cashInStore'
 import { useCashOutStore } from '~/stores/cashOutStore'
 import { Line } from 'vue-chartjs'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
+import { formatDateShort } from '~/utils/dateHelpers'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
 const cashInStore = useCashInStore()
 const cashOutStore = useCashOutStore()
 
-const { isLoading: cashInLoading, error: cashInError } = storeToRefs(cashInStore)
-const { isLoading: cashOutLoading, error: cashOutError } = storeToRefs(cashOutStore)
-
-const isLoading = computed(() => cashInLoading.value || cashOutLoading.value)
-const error = computed(() => cashInError.value || cashOutError.value)
-
-const lastUpdated = ref(null)
-
-const combinedTransactions = computed(() => {
-  const cashInTransactions = cashInStore.cashInTransactions.map(t => ({ ...t, type: 'cash-in' }))
-  const cashOutTransactions = cashOutStore.cashOutTransactions.map(t => ({ ...t, type: 'cash-out' }))
-  return [...cashInTransactions, ...cashOutTransactions]
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-})
-
-const totalCashIn = computed(() => cashInStore.totalCashIn)
-const totalCashOut = computed(() => cashOutStore.totalCashOut)
-const netCash = computed(() => totalCashIn.value - totalCashOut.value)
-
-onMounted(async () => {
-  await refreshTransactions()
-})
-
-const refreshTransactions = async (forceRefresh = true) => {
-  await Promise.all([
-    cashInStore.fetchCashInEntries(forceRefresh),
-    cashOutStore.fetchCashOutEntries(forceRefresh)
-  ])
-  lastUpdated.value = new Date()
-}
-
-const formatDate = (dateString) => {
-  const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }
-  return new Date(dateString).toLocaleDateString(undefined, options)
-}
-
+// Computed property for chart data
 const chartData = computed(() => {
   const dateMap = new Map()
   const today = new Date()
@@ -70,7 +37,12 @@ const chartData = computed(() => {
     dateMap.set(formattedDate, { cashIn: 0, cashOut: 0 })
   }
 
-  combinedTransactions.value.forEach(t => {
+  const combinedTransactions = [
+    ...cashInStore.cashInTransactions.map(t => ({ ...t, type: 'cash-in' })),
+    ...cashOutStore.cashOutTransactions.map(t => ({ ...t, type: 'cash-out' }))
+  ]
+
+  combinedTransactions.forEach(t => {
     const transactionDate = new Date(t.date)
     if (transactionDate >= sevenDaysAgo && transactionDate <= today) {
       const formattedDate = formatDateShort(t.date)
