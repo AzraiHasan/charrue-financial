@@ -11,15 +11,8 @@
       <div class="chart">
         <h3>Cash-in vs Cash-out</h3>
         <!-- TODO: Implement chart using Chart.js -->
-        <h1>TODO: Implement chart using Chart.js</h1>
-      </div>
-    </UCard>
-    <UCard class="mb-4">
-      <!-- Supply Investment Threshold Indicator -->
-      <div class="threshold-indicator">
-        <h3>Threshold Indicator</h3>
         <!-- TODO: Implement threshold indicator -->
-        <h1>TODO: Implement threshold indicator</h1>
+        <h1>TODO: Implement chart using Chart.js & threshold indicator</h1>
       </div>
     </UCard>
     <UCard class="mb-4">
