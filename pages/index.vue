@@ -4,19 +4,8 @@
   <div>
     <!-- Quick overview section -->
 
-    <section class="mt-3">
-      <Dashboard />
-    </section>
-
-    <!-- Quick actions section -->
     <section>
-      <div class="flex justify-between items-center my-6">
-        <h2 class="ml-4 text-xl font-semibold">Quick Actions</h2>
-        <div>
-          <UButton class="mr-4" to="/cash-in" size="lg">Cash In</UButton>
-          <UButton to="/cash-out" size="lg">Cash Out</UButton>
-        </div>
-      </div>
+      <Dashboard />
     </section>
 
     <UCard>

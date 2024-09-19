@@ -1,14 +1,22 @@
 // utils/dateHelpers.js
 
-// TODO: Import any necessary date manipulation libraries if needed
-
 /**
  * Formats a date to YYYY-MM-DD string
  * @param {Date} date - The date to format
  * @returns {string} Formatted date string
  */
 export const formatDate = (date) => {
-  // TODO: Implement date formatting logic
+  return date.toISOString().split("T")[0];
+};
+
+/**
+ * Formats a date to 'DD MMM' string (e.g., '17 Jan')
+ * @param {string} dateString - The date string to format
+ * @returns {string} Formatted date string
+ */
+export const formatDateShort = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", { day: "2-digit", month: "short" });
 };
 
 /**
@@ -36,7 +44,8 @@ export const getFiscalPeriod = (date) => {
  * @returns {boolean} True if valid, false otherwise
  */
 export const isValidDate = (dateString) => {
-  // TODO: Implement date validation logic
+  const date = new Date(dateString);
+  return !isNaN(date.getTime());
 };
 
 /**
@@ -46,7 +55,8 @@ export const isValidDate = (dateString) => {
  * @returns {number} The difference in days
  */
 export const daysBetween = (date1, date2) => {
-  // TODO: Implement date difference calculation logic
+  const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+  return Math.round(Math.abs((date1 - date2) / oneDay));
 };
 
 /**
@@ -56,5 +66,11 @@ export const daysBetween = (date1, date2) => {
  * @returns {Array} Array of Date objects
  */
 export const getDatesInMonth = (year, month) => {
-  // TODO: Implement logic to get all dates in a month
+  const date = new Date(year, month, 1);
+  const dates = [];
+  while (date.getMonth() === month) {
+    dates.push(new Date(date));
+    date.setDate(date.getDate() + 1);
+  }
+  return dates;
 };

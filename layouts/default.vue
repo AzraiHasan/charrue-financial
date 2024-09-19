@@ -4,7 +4,7 @@
   <UCard>
     <template #header>
       <div class="flex justify-between items-center">
-        <h1 class="text-xl font-semibold">Charrue Shake, Yo!</h1>
+        <h1 class="text-xl font-semibold">Coconut Shake, Yo!</h1>
         <UButton to="/" class="h-8" size="lg">Home</UButton to="/">
       </div>
     </template>
