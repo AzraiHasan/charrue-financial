@@ -5,7 +5,7 @@
     <div class="chart-container my-8">
       <Line :data="chartData" :options="chartOptions" />
     </div>
-    <div class="my-4">
+    <div class="">
       <UButton block to="/cash-in" size="lg">Record Cash In</UButton>
     </div>
   </div>

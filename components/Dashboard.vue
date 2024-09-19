@@ -27,7 +27,7 @@
       <!-- TODO: Display running total of cash-in-hand -->
       <h1>TODO: Display running total of cash-in-hand</h1>
     </div>
-    <div class="my-4">
+    <div class="mt-4">
       <UButton block to="/cash-out" size="lg">Record Cash Out</UButton>
     </div>
   </UCard>

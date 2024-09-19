@@ -14,7 +14,7 @@
     </main>
 
     <template #footer>
-      <div class="h-8">Footer</div>
+      <div class="h-8">🥥 2024 Charrue Ventures Inc. All Rights Reserved. 🥥</div>
     </template>
   </UCard>
 </template>
