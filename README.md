@@ -31,7 +31,7 @@ The Coconut Shake Financial Tracker is a web-based application designed to help 
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/coconut-shake-financial-tracker.git
+   git clone https://github.com/AzraiHasan/coconut-shake-financial-tracker.git
    ```
 
 2. Navigate to the project directory:
