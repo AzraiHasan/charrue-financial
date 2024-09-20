@@ -2,20 +2,31 @@
 
 /**
  * Formats a date to YYYY-MM-DD string
- * @param {Date} date - The date to format
+ * @param {Date|string} date - The date to format
  * @returns {string} Formatted date string
  */
 export const formatDate = (date) => {
+  if (!(date instanceof Date)) {
+    date = new Date(date);
+  }
+  if (isNaN(date.getTime())) {
+    console.error("Invalid date:", date);
+    return "Invalid Date";
+  }
   return date.toISOString().split("T")[0];
 };
 
 /**
  * Formats a date to 'DD MMM' string (e.g., '17 Jan')
- * @param {string} dateString - The date string to format
+ * @param {string|Date} dateString - The date string or Date object to format
  * @returns {string} Formatted date string
  */
 export const formatDateShort = (dateString) => {
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) {
+    console.error("Invalid date:", dateString);
+    return "Invalid Date";
+  }
   return date.toLocaleDateString("en-US", { day: "2-digit", month: "short" });
 };
 
@@ -26,7 +37,28 @@ export const formatDateShort = (dateString) => {
  * @returns {Object} Object containing start and end dates
  */
 export const getDateRange = (rangeType, date) => {
-  // TODO: Implement date range calculation logic
+  const start = new Date(date);
+  const end = new Date(date);
+
+  switch (rangeType) {
+    case "week":
+      start.setDate(start.getDate() - start.getDay());
+      end.setDate(end.getDate() - end.getDay() + 6);
+      break;
+    case "month":
+      start.setDate(1);
+      end.setMonth(end.getMonth() + 1);
+      end.setDate(0);
+      break;
+    case "year":
+      start.setMonth(0, 1);
+      end.setMonth(11, 31);
+      break;
+    default:
+      throw new Error("Invalid range type");
+  }
+
+  return { start, end };
 };
 
 /**
@@ -35,7 +67,10 @@ export const getDateRange = (rangeType, date) => {
  * @returns {string} Fiscal period identifier
  */
 export const getFiscalPeriod = (date) => {
-  // TODO: Implement fiscal period determination logic
+  const month = date.getMonth();
+  const year = date.getFullYear();
+  const fiscalYear = month >= 9 ? year + 1 : year; // Assuming fiscal year starts in October
+  return `FY${fiscalYear}`;
 };
 
 /**

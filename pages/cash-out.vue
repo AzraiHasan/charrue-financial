@@ -12,8 +12,7 @@
       <!-- Recent Cash Out Transactions -->
       <div class="recent-transactions">
         <UDivider class="my-8" />
-        <h2>[TODO] Recent Cash Out Transactions</h2>
-        <!-- TODO: Implement component for displaying recent cash out transactions -->
+        <RecentCashOutTransactions />
       </div>
     </section>
   </UCard>

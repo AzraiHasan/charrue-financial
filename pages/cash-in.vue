@@ -13,14 +13,15 @@
       <!-- Recent Cash In Transactions -->
       <div class="recent-transactions">
         <UDivider class="my-8" />
-        <h2>[TODO] Recent Cash In Transactions</h2>
-        <!-- TODO: Implement component for displaying recent cash in transactions -->
+        <RecentCashInTransactions />
       </div>
     </section>
   </UCard>
 </template>
 
 <script setup>
+import RecentCashInTransactions from '~/components/RecentCashInTransactions.vue';
+
 // Reactive data for recent transactions
 const recentTransactions = ref([])
 
