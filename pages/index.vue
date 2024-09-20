@@ -18,7 +18,6 @@
 </template>
 
 <script setup>
-import TransactionList from '~/components/TransactionList.vue';
 
 // Page-specific logic goes here
 // For example, fetching initial data or setting up page-specific state

@@ -1,88 +1,90 @@
-# TODO List for Dashboard Development
+# Updated Dashboard TODO List
 
-## Dashboard.vue
+## Phase 1: Local Development and Optimization
 
-1. [ ] Implement Chart.js integration for Cash-in vs Cash-out Chart
-   - [ ] Install and set up Chart.js
-   - [ ] Create a line or bar chart comparing cash-in and cash-out over time
-   - [ ] Add a threshold indicator to the chart
+### 1. Dashboard Component Optimization
 
-2. [ ] Implement Running Total of Cash-in-hand
-   - [ ] Calculate the difference between total cash-in and total cash-out
-   - [ ] Display the result prominently on the dashboard
+- [ ] Implement lazy loading for Dashboard components
+  - [ ] Create separate components for CashInHand, and WeeklyExpenses
+  - [ ] Use Nuxt's built-in lazy loading capabilities (e.g., `defineAsyncComponent`)
+  - [ ] Update Dashboard.vue to use lazy-loaded components
 
-3. [ ] Implement Total Cash-out by Category per Week
-   - [ ] Group cash-out transactions by category and week
-   - [ ] Create a stacked bar chart or pie chart to visualize this data
+### 2. Dashboard.vue Enhancements
 
-4. [ ] Create a fetchDashboardData function to populate all dashboard components
-   - [ ] Fetch data from local IndexedDB
-   - [ ] Update reactive variables with fetched data
+- [ ] Implement Chart.js integration for Cash-in vs Cash-out Chart
+  - [ ] Create a line or bar chart comparing cash-in and cash-out over time
+  - [ ] Add a threshold indicator to the chart
+- [ ] Implement Running Total of Cash-in-hand
+  - [ ] Calculate the difference between total cash-in and total cash-out
+  - [ ] Display the result prominently on the dashboard
+- [ ] Implement Total Cash-out by Category per Week
+  - [ ] Group cash-out transactions by category and week
+  - [ ] Create a stacked bar chart or pie chart to visualize this data
 
-5. [ ] Implement error handling and loading states for all data fetching operations
+### 3. Data Management and Processing
 
-## Cloud Synchronization
+- [ ] Create utility functions for data processing (in utils/financialCalculations.js):
+  - [ ] Function to calculate running total
+  - [ ] Function to group transactions by week and category
+  - [ ] Function to calculate cash flow over time
+- [ ] Create a fetchDashboardData function to populate all dashboard components
+  - [ ] Fetch data from local IndexedDB
+  - [ ] Update reactive variables with fetched data
+- [ ] Implement error handling for all data fetching operations
+  - [ ] Create a global error handling strategy (e.g., error handling composable)
 
-6. [ ] Set up a cloud database (e.g., Firebase Realtime Database or Firestore)
+### 4. Performance and Accessibility Improvements
 
-7. [ ] Modify cashInStore.js and cashOutStore.js:
-   - [ ] Update addCashInEntry and addCashOutEntry to immediately update local IndexedDB
-   - [ ] Add functions to sync new entries to the cloud database
+- [ ] Implement loading states for all data fetching operations
+- [ ] Optimize database queries for large datasets
+- [ ] Implement caching strategies for frequently accessed data
+- [ ] Ensure accessibility for all components
+  - [ ] Add proper ARIA attributes
+  - [ ] Implement keyboard navigation
+- [ ] Set up performance monitoring
+  - [ ] Use Vue DevTools for development performance monitoring
+  - [ ] Consider implementing a third-party service for production monitoring
 
-8. [ ] Create a new composable (e.g., useCloudSync.js):
-   - [ ] Implement a function to push local data to the cloud
-   - [ ] Implement a function to fetch data from the cloud and update local IndexedDB
+### 5. User Experience Enhancements
 
-9. [ ] Add cloud synchronization to cash-in and cash-out form submission processes
+- [ ] Implement error messages and notifications for user actions
+- [ ] Add tooltips or help text to explain dashboard elements
+- [ ] Create a user onboarding process or tutorial for new users
 
-## Scheduled Cloud Fetch
+## Phase 2: Testing
 
-10. [ ] Implement a daily scheduled fetch from the cloud:
-    - [ ] Create a new composable (e.g., useScheduledSync.js)
-    - [ ] Implement a function to check if a daily sync is needed
-    - [ ] Use browser's localStorage to store the last sync timestamp
-    - [ ] Trigger the cloud fetch if a day has passed since the last sync
+- [ ] Set up testing environment (e.g., Vitest for unit and component testing)
+- [ ] Write unit tests for utility functions in financialCalculations.js
+- [ ] Write component tests for Dashboard components (CashFlowChart, CashInHand, WeeklyExpenses)
+- [ ] Write integration tests for the dashboard page
+- [ ] Set up end-to-end testing environment (e.g., Cypress)
+- [ ] Implement end-to-end tests for critical user flows
 
-11. [ ] Integrate the scheduled fetch into the app:
-    - [ ] Call the check function on app startup (in a plugin or app.vue)
-    - [ ] Trigger the fetch if needed, updating all stores with new data
+## Phase 3: Cloud Implementation Planning
 
-## Dashboard Components
+- [ ] Research and choose a cloud database solution (e.g., Firebase Realtime Database or Firestore)
+- [ ] Design the cloud database schema
+- [ ] Plan the data synchronization strategy between local and cloud storage
+- [ ] Outline the necessary changes to existing components and stores for cloud integration
 
-12. [ ] Create a CashFlowChart.vue component:
-    - [ ] Implement Chart.js to visualize cash-in vs cash-out
-    - [ ] Add props for data input and customization
-    - [ ] Implement the threshold indicator
+### Future Considerations (Post-Cloud Implementation)
 
-13. [ ] Create a CashInHand.vue component:
-    - [ ] Display the current cash-in-hand amount
-    - [ ] Add a simple trend indicator (up/down arrow)
-
-14. [ ] Create a WeeklyExpenses.vue component:
-    - [ ] Implement a chart to show expenses by category
-    - [ ] Add filters for selecting different weeks
-
-## Data Processing
-
-15. [ ] Create utility functions for data processing (in utils/financialCalculations.js):
-    - [ ] Function to calculate running total
-    - [ ] Function to group transactions by week and category
-    - [ ] Function to calculate cash flow over time
-
-## Testing
-
-16. [ ] Write unit tests for new utility functions and store actions
-17. [ ] Write component tests for new Dashboard components
-18. [ ] Implement end-to-end tests for the dashboard page and cloud sync functionality
-
-## Optimization
-
-19. [ ] Implement lazy loading for Dashboard components
-20. [ ] Optimize database queries for large datasets
-21. [ ] Implement caching strategies for frequently accessed data
+- [ ] Internationalization setup (if expanding to different regions)
+  - [ ] Research and choose an i18n library (e.g., vue-i18n)
+  - [ ] Plan for translation management
+- [ ] Enhanced reporting features
+  - [ ] Implement more advanced financial reports and analytics
+- [ ] Mobile responsiveness improvements
+  - [ ] Test and optimize the application for various device sizes
+- [ ] Progressive Web App (PWA) capabilities
+  - [ ] Implement offline functionality
+  - [ ] Add to home screen feature
 
 ## Documentation
 
-22. [ ] Update project documentation with new cloud sync features
-23. [ ] Create user guide for understanding the dashboard
-24. [ ] Document the data flow between local storage and cloud database
+- [ ] Update project documentation with new features and components
+- [ ] Create a user guide for understanding the dashboard
+- [ ] Document the data flow between components and stores
+- [ ] Prepare technical documentation for future development and maintenance
+
+Remember to regularly review and update this TODO list as you progress through the development phases. Priorities may shift, and new tasks may arise as you implement and test the various components of the dashboard.

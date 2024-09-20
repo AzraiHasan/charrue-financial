@@ -21,11 +21,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import CashInForm from '@/components/CashInForm.vue'
-import TransactionList from '~/components/TransactionList.vue';
-// TODO: Import necessary composables or stores
-
 // Reactive data for recent transactions
 const recentTransactions = ref([])
 

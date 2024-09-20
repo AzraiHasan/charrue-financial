@@ -36,7 +36,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
 // TODO: Import necessary composables or stores
 
 // Reactive state

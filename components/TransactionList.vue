@@ -46,11 +46,6 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue'
-import { useCashInStore } from '~/stores/cashInStore'
-import { useCashOutStore } from '~/stores/cashOutStore'
-import { storeToRefs } from 'pinia'
-
 const cashInStore = useCashInStore()
 const cashOutStore = useCashOutStore()
 

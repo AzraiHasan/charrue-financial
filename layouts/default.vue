@@ -4,7 +4,7 @@
   <UCard>
     <template #header>
       <div class="flex justify-between items-center">
-        <h1 class="text-xl font-semibold">Coconut Shake, Yo!</h1>
+        <h1 class="text-2xl font-bold">Let's Coco Loco!</h1>
         <UButton to="/" class="h-8" size="lg">Home</UButton to="/">
       </div>
     </template>
@@ -14,7 +14,7 @@
     </main>
 
     <template #footer>
-      <div class="h-8">🥥 2024 Charrue Ventures Inc. All Rights Reserved. 🥥</div>
+      <div class="h-8 flex justify-center">🥥 2024 Charrue Ventures Inc. 🥥</div>
     </template>
   </UCard>
 </template>

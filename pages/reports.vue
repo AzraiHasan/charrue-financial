@@ -37,8 +37,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import ReportGenerator from '@/components/ReportGenerator.vue'
 // TODO: Import necessary chart and table components
 
 const currentReport = ref(null)

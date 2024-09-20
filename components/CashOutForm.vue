@@ -28,9 +28,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { useCashOutStore } from '@/stores/cashOutStore'
-
 const cashOutStore = useCashOutStore()
 
 const categories = ['Ingredients', 'Supplies', 'Equipment', 'Rent', 'Utilities', 'Salary', 'Other']

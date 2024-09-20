@@ -1,23 +1,23 @@
-<!-- components/TestChart.vue -->
+<!-- components/DashboardChart.vue -->
+
+<!-- DONE: Implement chart using Chart.js -->
+<!-- TODO: Implement threshold indicator -->
+
 <template>
   <div>
     <!-- Chart Section -->
     <div class="chart-container my-8">
       <Line :data="chartData" :options="chartOptions" />
     </div>
-    <div class="">
+    <div class="mt-8">
       <UButton block to="/cash-in" size="lg">Record Cash In</UButton>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
-import { useCashInStore } from '~/stores/cashInStore'
-import { useCashOutStore } from '~/stores/cashOutStore'
 import { Line } from 'vue-chartjs'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
-import { formatDateShort } from '~/utils/dateHelpers'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
@@ -92,6 +92,9 @@ const chartOptions = ref({
     }
   },
   plugins: {
+    legend: {
+      position: 'bottom',
+    },
     tooltip: {
       callbacks: {
         title: (context) => {

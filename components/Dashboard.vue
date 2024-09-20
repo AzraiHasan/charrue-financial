@@ -1,31 +1,26 @@
 <!-- components/Dashboard.vue -->
 
 <template>
-
   <UCard class="mb-4">
     <!-- Cash-in vs Cash-out Chart -->
-    <div class="chart">
-      <h3 class="mb-4">Cash-in vs Cash-out</h3>
-      <!-- TODO: Implement chart using Chart.js -->
-      <!-- TODO: Implement threshold indicator -->
-      <TestChart />
+    <div>
+      <h2 class="text-xl font-semibold mb-4">Cash-in vs Cash-out</h2>
+      <DashboardChart />
     </div>
   </UCard>
-  <UCard class="mb-4">
-    <!-- Total Cash-out by Category per Week -->
-    <div class="cash-out-by-category">
+  <!-- <UCard class="mb-4">
+    <div>
       <h3>Weekly Expenses by Category</h3>
-      <!-- TODO: Display total cash-out by category for the current week -->
       <h1>TODO: Display total cash-out by category for the current week</h1>
     </div>
-  </UCard>
+  </UCard> -->
 
   <UCard class="mb-4">
     <!-- Running Total of Cash-in-hand -->
-    <div class="cash-in-hand">
-      <h3>Cash in Hand</h3>
+    <div>
+      <h2 class="text-xl font-semibold mb-4">Weekly Expenses vs Cash in Hand</h2>
       <!-- TODO: Display running total of cash-in-hand -->
-      <h1>TODO: Display running total of cash-in-hand</h1>
+      <FinancialSummaryChart />
     </div>
     <div class="mt-4">
       <UButton block to="/cash-out" size="lg">Record Cash Out</UButton>
@@ -35,8 +30,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import TestChart from './TestChart.vue';
+import FinancialSummaryChart from './FinancialSummaryChart.vue';
+
 // TODO: Import necessary composables or stores
 
 // Reactive data

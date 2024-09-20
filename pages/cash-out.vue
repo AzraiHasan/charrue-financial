@@ -20,6 +20,4 @@
 </template>
 
 <script setup>
-import CashOutForm from '@/components/CashOutForm.vue'
-import TransactionList from '@/components/TransactionList.vue'
 </script>
