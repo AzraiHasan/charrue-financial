@@ -9,6 +9,17 @@
       <USelect v-model="selectedCategory" :options="categoryOptions" placeholder="Select category" class="w-64 mr-2" />
 
     </div>
+    <div class="transaction-summary mb-4">
+      <div class="text-green-500">
+        <strong>Total Cash In: ${{ overallTotalCashIn.toFixed(2) }}</strong>
+      </div>
+      <div class="text-red-500">
+        <strong>Total Cash Out: ${{ overallTotalCashOut.toFixed(2) }}</strong>
+      </div>
+      <div class="net-cash">
+        <strong>Current Balance: ${{ overallNetCash.toFixed(2) }}</strong>
+      </div>
+    </div>
     <div v-if="error" class="error-message">
       {{ error }}
     </div>
@@ -31,17 +42,7 @@
       </li>
     </ul>
     <p v-else>No transactions found.</p>
-    <div class="transaction-summary">
-      <div class="total-cash-in">
-        <strong>Total Cash In: ${{ totalCashIn.toFixed(2) }}</strong>
-      </div>
-      <div class="total-cash-out">
-        <strong>Total Cash Out: ${{ totalCashOut.toFixed(2) }}</strong>
-      </div>
-      <div class="net-cash">
-        <strong>Net Cash: ${{ netCash.toFixed(2) }}</strong>
-      </div>
-    </div>
+
   </div>
 </template>
 
@@ -82,6 +83,21 @@ const filteredTransactions = computed(() => {
   return combinedTransactions.value.filter(t => t.category === selectedCategory.value)
 })
 
+// New computed properties for overall totals
+const overallTotalCashIn = computed(() =>
+  combinedTransactions.value
+    .filter(t => t.type === 'cash-in')
+    .reduce((sum, t) => sum + t.amount, 0)
+)
+
+const overallTotalCashOut = computed(() =>
+  combinedTransactions.value
+    .filter(t => t.type === 'cash-out')
+    .reduce((sum, t) => sum + t.amount, 0)
+)
+
+const overallNetCash = computed(() => overallTotalCashIn.value - overallTotalCashOut.value)
+
 const totalCashIn = computed(() =>
   filteredTransactions.value
     .filter(t => t.type === 'cash-in')
@@ -113,10 +129,6 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options)
 }
 </script>
-
-<style scoped>
-/* Styles remain unchanged */
-</style>
 
 <style scoped>
 .transaction-list {
@@ -163,7 +175,7 @@ const formatDate = (dateString) => {
 }
 
 .transaction-amount.cash-in {
-  color: green;
+  color: rgb(0, 185, 0);
 }
 
 .transaction-amount.cash-out {
@@ -192,13 +204,9 @@ const formatDate = (dateString) => {
   gap: 1rem;
 }
 
-.total-cash-in {
-  color: green;
-}
 
-.total-cash-out {
-  color: red;
-}
+
+
 
 .net-cash {
   grid-column: 1 / -1;
