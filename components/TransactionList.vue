@@ -5,9 +5,10 @@
     <h2 class="text-xl font-semibold">All Transactions</h2>
     <div class="controls my-4">
       <p v-if="lastUpdated">Last updated: {{ formatDate(lastUpdated) }}</p>
-      <UButton @click="refreshTransactions" :loading="isLoading" :disabled="isLoading">
-        Refresh
-      </UButton>
+
+      <USelect v-model="selectedCategory" :options="categoryOptions" placeholder="Select category" size="lg"
+        class="w-64 mr-2" />
+
     </div>
     <div v-if="error" class="error-message">
       {{ error }}
@@ -15,8 +16,8 @@
     <div v-if="isLoading" class="loading-message">
       Loading transactions...
     </div>
-    <ul v-else-if="combinedTransactions.length" class="transaction-items">
-      <li v-for="transaction in combinedTransactions" :key="transaction.id" class="transaction-item">
+    <ul v-else-if="filteredTransactions.length" class="transaction-items">
+      <li v-for="transaction in filteredTransactions" :key="transaction.id" class="transaction-item">
         <div class="transaction-date">{{ formatDate(transaction.date) }}</div>
         <div :class="['transaction-amount', transaction.type === 'cash-in' ? 'cash-in' : 'cash-out']">
           {{ transaction.type === 'cash-in' ? '+' : '-' }}${{ transaction.amount.toFixed(2) }}
@@ -56,16 +57,44 @@ const isLoading = computed(() => cashInLoading.value || cashOutLoading.value)
 const error = computed(() => cashInError.value || cashOutError.value)
 
 const lastUpdated = ref(null)
+const selectedCategory = ref('All Categories')
 
 const combinedTransactions = computed(() => {
-  const cashInTransactions = cashInStore.cashInTransactions.map(t => ({ ...t, type: 'cash-in' }))
+  const cashInTransactions = cashInStore.cashInTransactions.map(t => ({ ...t, type: 'cash-in', category: 'Cash In' }))
   const cashOutTransactions = cashOutStore.cashOutTransactions.map(t => ({ ...t, type: 'cash-out' }))
   return [...cashInTransactions, ...cashOutTransactions]
     .sort((a, b) => new Date(b.date) - new Date(a.date))
 })
 
-const totalCashIn = computed(() => cashInStore.totalCashIn)
-const totalCashOut = computed(() => cashOutStore.totalCashOut)
+const categoryOptions = computed(() => {
+  const categories = new Set(combinedTransactions.value
+    .filter(t => t.category && t.category !== 'Cash In')
+    .map(t => t.category))
+  return ['All Categories', 'Cash In', ...Array.from(categories)]
+})
+
+const filteredTransactions = computed(() => {
+  if (selectedCategory.value === 'All Categories') {
+    return combinedTransactions.value
+  }
+  if (selectedCategory.value === 'Cash In') {
+    return combinedTransactions.value.filter(t => t.type === 'cash-in')
+  }
+  return combinedTransactions.value.filter(t => t.category === selectedCategory.value)
+})
+
+const totalCashIn = computed(() =>
+  filteredTransactions.value
+    .filter(t => t.type === 'cash-in')
+    .reduce((sum, t) => sum + t.amount, 0)
+)
+
+const totalCashOut = computed(() =>
+  filteredTransactions.value
+    .filter(t => t.type === 'cash-out')
+    .reduce((sum, t) => sum + t.amount, 0)
+)
+
 const netCash = computed(() => totalCashIn.value - totalCashOut.value)
 
 onMounted(async () => {

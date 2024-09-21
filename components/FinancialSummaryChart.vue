@@ -80,7 +80,6 @@ const chartData = computed(() => {
         backgroundColor: 'rgba(34, 197, 94, 0.2)',
         fill: true,
         tension: 0.1,
-
       }
     ]
   }
@@ -96,10 +95,6 @@ const chartOptions = ref({
     y: {
       stacked: true,
       beginAtZero: true,
-      title: {
-        display: true,
-        text: 'Expenses'
-      }
     },
   },
   plugins: {
