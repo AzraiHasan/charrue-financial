@@ -1,6 +1,5 @@
 <!-- components/DashboardChart.vue -->
 
-<!-- DONE: Implement chart using Chart.js -->
 <!-- TODO: Implement threshold indicator -->
 
 <template>
@@ -89,11 +88,15 @@ const chartData = computed(() => {
         label: 'Cash In',
         backgroundColor: 'lime',
         borderColor: 'green',
+        pointRadius: 4,
+        pointHitRadius: 15,
         data: sortedDates.map(date => dateMap.get(date).cashIn),
       },
       {
         label: 'Cash Out',
         backgroundColor: 'rose',
+        pointRadius: 4,
+        pointHitRadius: 15,
         borderColor: 'red',
         data: sortedDates.map(date => dateMap.get(date).cashOut),
       }
