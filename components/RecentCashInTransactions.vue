@@ -28,7 +28,7 @@
   <p v-else>No recent cash-in transactions found.</p>
   <div class="transaction-summary my-4">
     <div class="total-cash-in">
-      <strong>Total Cash In Last 30 Days: ${{ totalRecentCashIn.toFixed(2) }}</strong>
+      <strong>Total Cash In Last 7 Days: ${{ totalRecentCashIn.toFixed(2) }}</strong>
     </div>
 
   </div>
@@ -46,11 +46,11 @@ const { isLoading, error } = storeToRefs(cashInStore)
 const lastUpdated = ref(null)
 
 const recentTransactions = computed(() => {
-  const thirtyDaysAgo = new Date()
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+  const sevenDaysAgo = new Date()
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
 
   return cashInStore.cashInTransactions
-    .filter(t => new Date(t.date) >= thirtyDaysAgo)
+    .filter(t => new Date(t.date) >= sevenDaysAgo)
     .sort((a, b) => new Date(b.date) - new Date(a.date))
 })
 
@@ -114,7 +114,7 @@ const refreshTransactions = async () => {
 }
 
 .transaction-amount.cash-in {
-  color: green;
+  color: rgb(0, 185, 0);
 }
 
 .transaction-notes {
@@ -129,7 +129,7 @@ const refreshTransactions = async () => {
 }
 
 .total-cash-in {
-  color: green;
+  color: rgb(0, 185, 0);
   font-size: 1.2em;
 }
 </style>

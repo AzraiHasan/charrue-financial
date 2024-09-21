@@ -3,6 +3,7 @@
 <template>
   <div>
     <section>
+
       <Dashboard />
     </section>
   </div>

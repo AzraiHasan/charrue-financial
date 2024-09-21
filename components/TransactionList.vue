@@ -175,7 +175,7 @@ const formatDate = (dateString) => {
 }
 
 .transaction-amount.cash-in {
-  color: rgb(0, 185, 0);
+  color: rgb(1, 188, 1);
 }
 
 .transaction-amount.cash-out {
@@ -203,10 +203,6 @@ const formatDate = (dateString) => {
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
-
-
-
-
 
 .net-cash {
   grid-column: 1 / -1;

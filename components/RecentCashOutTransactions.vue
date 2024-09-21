@@ -30,7 +30,7 @@
     <p v-else>No recent cash-out transactions found.</p>
     <div class="transaction-summary">
       <div class="total-cash-out">
-        <strong>Total Cash Out Last 30 Days: ${{ totalRecentCashOut.toFixed(2) }}</strong>
+        <strong>Total Cash Out Last 7 Days: ${{ totalRecentCashOut.toFixed(2) }}</strong>
       </div>
     </div>
   </div>
@@ -48,11 +48,11 @@ const { isLoading, error } = storeToRefs(cashOutStore)
 const lastUpdated = ref(null)
 
 const recentTransactions = computed(() => {
-  const thirtyDaysAgo = new Date()
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+  const sevenDaysAgo = new Date()
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
 
   return cashOutStore.cashOutTransactions
-    .filter(t => new Date(t.date) >= thirtyDaysAgo)
+    .filter(t => new Date(t.date) >= sevenDaysAgo)
     .sort((a, b) => new Date(b.date) - new Date(a.date))
 })
 

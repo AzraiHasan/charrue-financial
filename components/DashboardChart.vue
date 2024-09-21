@@ -3,6 +3,7 @@
 <!-- TODO: Implement threshold indicator -->
 
 <template>
+  
   <div>
     <div v-if="isLoading" class="text-center">
       <div class="space-y-2">
