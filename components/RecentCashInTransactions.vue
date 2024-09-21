@@ -1,36 +1,36 @@
 <!-- components/RecentCashInTransactions.vue -->
 <template>
   <div class="recent-cash-in-transactions">
-    <h2 class="text-xl font-semibold">Cash-In Transactions (Last 30 Days)</h2>
     <div class="controls my-4">
       <p v-if="lastUpdated">Last updated: {{ formatDate(lastUpdated) }}</p>
-      <UButton @click="refreshTransactions" :loading="isLoading" :disabled="isLoading">
-        Refresh
+      <UButton to="/all-transactions">
+        All Transactions
       </UButton>
     </div>
-    <div v-if="error" class="error-message">
-      {{ error }}
-    </div>
-    <div v-if="isLoading" class="loading-message">
-      Loading recent cash-in transactions...
-    </div>
-    <ul v-else-if="recentTransactions.length" class="transaction-items">
-      <li v-for="transaction in recentTransactions" :key="transaction.id" class="transaction-item">
-        <div class="transaction-date">{{ formatDate(transaction.date) }}</div>
-        <div class="transaction-amount cash-in">
-          +${{ transaction.amount.toFixed(2) }}
-        </div>
-        <div v-if="transaction.notes" class="transaction-notes">
-          {{ transaction.notes }}
-        </div>
-      </li>
-    </ul>
-    <p v-else>No recent cash-in transactions found.</p>
-    <div class="transaction-summary">
-      <div class="total-cash-in">
-        <strong>Total Cash In (Last 30 Days): ${{ totalRecentCashIn.toFixed(2) }}</strong>
+  </div>
+  <div v-if="error" class="error-message">
+    {{ error }}
+  </div>
+  <div v-if="isLoading" class="loading-message">
+    Loading recent cash-in transactions...
+  </div>
+  <ul v-else-if="recentTransactions.length" class="transaction-items">
+    <li v-for="transaction in recentTransactions" :key="transaction.id" class="transaction-item">
+      <div class="transaction-date">{{ formatDate(transaction.date) }}</div>
+      <div class="transaction-amount cash-in">
+        +${{ transaction.amount.toFixed(2) }}
       </div>
+      <div v-if="transaction.notes" class="transaction-notes">
+        {{ transaction.notes }}
+      </div>
+    </li>
+  </ul>
+  <p v-else>No recent cash-in transactions found.</p>
+  <div class="transaction-summary my-4">
+    <div class="total-cash-in">
+      <strong>Total Cash In Last 30 Days: ${{ totalRecentCashIn.toFixed(2) }}</strong>
     </div>
+
   </div>
 </template>
 

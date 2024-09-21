@@ -1,11 +1,10 @@
 <!-- components/RecentCashOutTransactions.vue -->
 <template>
   <div class="recent-cash-out-transactions">
-    <h2 class="text-xl font-semibold">Cash-Out Transactions (Last 30 Days)</h2>
     <div class="controls my-4">
       <p v-if="lastUpdated">Last updated: {{ formatDate(lastUpdated) }}</p>
-      <UButton @click="refreshTransactions" :loading="isLoading" :disabled="isLoading">
-        Refresh
+      <UButton to="/all-transactions">
+        All Transactions
       </UButton>
     </div>
     <div v-if="error" class="error-message">
@@ -31,7 +30,7 @@
     <p v-else>No recent cash-out transactions found.</p>
     <div class="transaction-summary">
       <div class="total-cash-out">
-        <strong>Total Cash Out (Last 30 Days): ${{ totalRecentCashOut.toFixed(2) }}</strong>
+        <strong>Total Cash Out Last 30 Days: ${{ totalRecentCashOut.toFixed(2) }}</strong>
       </div>
     </div>
   </div>

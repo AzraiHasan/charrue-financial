@@ -4,12 +4,12 @@
   <form @submit.prevent="handleSubmit" class="cash-out-form">
     <div class="mb-4 form-group">
       <label for="date">Date:</label>
-      <UInput type="date" id="date" v-model="formData.date" required />
+      <UInput type="date" id="date" size="xl" v-model="formData.date" required />
     </div>
 
     <div class="mb-4 form-group">
       <label for="amount">Amount:</label>
-      <UInput type="number" id="amount" v-model="formData.amount" min="0" step="0.01" required />
+      <UInput type="number" id="amount" size="xl" v-model="formData.amount" min="0" step="0.01" required />
     </div>
 
     <div class="mb-4 form-group">

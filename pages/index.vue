@@ -8,12 +8,11 @@
       <Dashboard />
     </section>
 
-    <UCard>
+    <!-- <UCard>
       <template #header>
         <TransactionList />
       </template>
-      <!-- TODO: Add component to display recent cash in/out entries -->
-    </UCard>
+</UCard> -->
   </div>
 </template>
 

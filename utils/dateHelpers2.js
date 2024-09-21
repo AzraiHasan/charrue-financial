@@ -1,22 +1,6 @@
 // utils/dateHelpers.js
 
 /**
- * Memoization helper function
- * @param {Function} fn - Function to memoize
- * @returns {Function} Memoized function
- */
-export const memoize = (fn) => {
-  const cache = new Map();
-  return (...args) => {
-    const key = JSON.stringify(args);
-    if (cache.has(key)) return cache.get(key);
-    const result = fn(...args);
-    cache.set(key, result);
-    return result;
-  };
-};
-
-/**
  * Formats a date to YYYY-MM-DD string
  * @param {Date|string} date - The date to format
  * @returns {string} Formatted date string
@@ -52,7 +36,7 @@ export const formatDateShort = (dateString) => {
  * @param {Date} date - The reference date
  * @returns {Object} Object containing start and end dates
  */
-export const getDateRange = memoize((rangeType, date) => {
+export const getDateRange = (rangeType, date) => {
   const start = new Date(date);
   const end = new Date(date);
 
@@ -75,22 +59,6 @@ export const getDateRange = memoize((rangeType, date) => {
   }
 
   return { start, end };
-});
-
-/**
- * Creates an array of dates for a given range
- * @param {Date} start - Start date
- * @param {Date} end - End date
- * @returns {Array} Array of Date objects
- */
-export const createDateRange = (start, end) => {
-  const range = [];
-  let current = new Date(start);
-  while (current <= end) {
-    range.push(new Date(current));
-    current.setDate(current.getDate() + 1);
-  }
-  return range;
 };
 
 /**

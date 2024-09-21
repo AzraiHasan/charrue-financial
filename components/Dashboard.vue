@@ -15,16 +15,9 @@
     </div>
   </UCard> -->
 
-  <UCard class="mb-4">
-    <!-- Running Total of Cash-in-hand -->
-    <div>
-      <h2 class="text-xl font-semibold mb-4">Weekly Expenses vs Cash in Hand</h2>
-      <!-- TODO: Display running total of cash-in-hand -->
-      <FinancialSummaryChart />
-    </div>
-    <div class="mt-4">
-      <UButton block to="/cash-out" size="lg">Record Cash Out</UButton>
-    </div>
+  <UCard class="">
+    <h2 class="text-xl font-semibold mb-4">Weekly Expenses vs Cash in Hand</h2>
+    <FinancialSummaryChart />
   </UCard>
 
 </template>

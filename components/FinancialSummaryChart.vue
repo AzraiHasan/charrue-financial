@@ -1,7 +1,15 @@
 <!-- components/FinancialSummaryChart.vue -->
 <template>
   <div>
-    <div class="chart-container my-8">
+    <div v-if="isLoading" class="text-center">
+      <div class="space-y-2">
+        <USkeleton class="h-[250px]" />
+      </div>
+    </div>
+    <div v-else-if="error" class="text-red-500">
+      {{ error }}
+    </div>
+    <div v-else class="chart-container">
       <Bar :data="chartData" :options="chartOptions" />
     </div>
   </div>
@@ -17,6 +25,21 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 const cashInStore = useCashInStore()
 const cashOutStore = useCashOutStore()
+const isLoading = ref(true)
+const error = ref(null)
+
+onMounted(async () => {
+  try {
+    await Promise.all([
+      cashInStore.fetchCashInEntries(),
+      cashOutStore.fetchCashOutEntries()
+    ])
+    isLoading.value = false
+  } catch (e) {
+    error.value = 'Failed to load data. Please try again.'
+    isLoading.value = false
+  }
+})
 
 const categories = [
   { name: 'Ingredients', color: 'white' },

@@ -5,12 +5,17 @@
 
 <template>
   <div>
-    <!-- Chart Section -->
-    <div class="chart-container my-8">
-      <Line :data="chartData" :options="chartOptions" />
+    <div v-if="isLoading" class="text-center">
+      <div class="space-y-2">
+        <USkeleton class="h-[250px]" />
+      </div>
     </div>
-    <div class="mt-8">
-      <UButton block to="/cash-in" size="lg">Record Cash In</UButton>
+    <div v-else-if="error" class="text-red-500">
+      {{ error }}
+    </div>
+    <!-- Chart Section -->
+    <div v-else class="chart-container ">
+      <Line :data="chartData" :options="chartOptions" />
     </div>
   </div>
 </template>
@@ -18,6 +23,22 @@
 <script setup>
 import { Line } from 'vue-chartjs'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
+
+const isLoading = ref(true)
+const error = ref(null)
+
+onMounted(async () => {
+  try {
+    await Promise.all([
+      cashInStore.fetchCashInEntries(),
+      cashOutStore.fetchCashOutEntries()
+    ])
+    isLoading.value = false
+  } catch (e) {
+    error.value = 'Failed to load data. Please try again.'
+    isLoading.value = false
+  }
+})
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
