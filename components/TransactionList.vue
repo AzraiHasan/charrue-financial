@@ -5,8 +5,9 @@
     <h2 class="text-xl font-semibold">All Transactions</h2>
     <div class="controls my-4">
       <p v-if="lastUpdated">Last updated: {{ formatDate(lastUpdated) }}</p>
-      <USelect v-model="selectedCategory" :options="categoryOptions" placeholder="Select category" size="lg"
-        class="w-64 mr-2" />
+
+      <USelect v-model="selectedCategory" :options="categoryOptions" placeholder="Select category" class="w-64 mr-2" />
+
     </div>
     <div v-if="error" class="error-message">
       {{ error }}
@@ -112,6 +113,10 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options)
 }
 </script>
+
+<style scoped>
+/* Styles remain unchanged */
+</style>
 
 <style scoped>
 .transaction-list {
