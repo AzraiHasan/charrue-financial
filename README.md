@@ -24,8 +24,8 @@ The Coconut Shake Financial Tracker is a web-based application designed to help 
 
 ## Prerequisites
 
-- Node.js (version X.X.X or higher)
-- npm (version X.X.X or higher) or yarn (version X.X.X or higher)
+- Node.js (version 18 or higher)
+- npm (latest stable version) or yarn (latest stable version)
 
 ## Installation
 
@@ -70,13 +70,7 @@ yarn build
 
 ## Testing
 
-To run the test suite:
-
-```
-npm run test
-# or
-yarn test
-```
+No unit test implemented yet.
 
 ## Contributing
 
