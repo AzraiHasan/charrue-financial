@@ -75,6 +75,8 @@ const chartData = computed(() => {
         type: 'line',
         borderColor: 'rgb(34, 197, 94)', // green
         borderDash: [5, 5],
+        pointRadius: 4,
+        pointHitRadius: 15,
         backgroundColor: 'rgba(34, 197, 94, 0.2)',
         fill: true,
         tension: 0.1,
@@ -99,14 +101,6 @@ const chartOptions = ref({
         text: 'Expenses'
       }
     },
-    /* y1: {
-      position: 'right',
-      beginAtZero: true,
-      title: {
-        display: false,
-        text: 'Cash in Hand'
-      }
-    } */
   },
   plugins: {
     legend: {
