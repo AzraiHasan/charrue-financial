@@ -5,8 +5,7 @@
     <h2 class="text-xl font-semibold">All Transactions</h2>
     <div class="controls my-4">
       <p v-if="lastUpdated">Last updated: {{ formatDate(lastUpdated) }}</p>
-      <UButton @click="refreshTransactions" :loading="isLoading" :disabled="isLoading">
-        Refresh
+      <UButton @click="refreshTransactions" :loading="isLoading" :disabled="isLoading" size="lg"> Refresh
       </UButton>
     </div>
     <div v-if="error" class="error-message">
