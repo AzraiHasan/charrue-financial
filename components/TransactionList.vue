@@ -5,15 +5,8 @@
     <h2 class="text-xl font-semibold">All Transactions</h2>
     <div class="controls my-4">
       <p v-if="lastUpdated">Last updated: {{ formatDate(lastUpdated) }}</p>
-<<<<<<< HEAD
-
       <USelect v-model="selectedCategory" :options="categoryOptions" placeholder="Select category" size="lg"
         class="w-64 mr-2" />
-
-=======
-      <UButton @click="refreshTransactions" :loading="isLoading" :disabled="isLoading" size="lg"> Refresh
-      </UButton>
->>>>>>> 781fda67389539a406564ef7810d6e40814e0711
     </div>
     <div v-if="error" class="error-message">
       {{ error }}
