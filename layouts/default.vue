@@ -5,6 +5,7 @@
     <template #header>
       <div class="flex justify-between items-center">
         <h1 class="text-2xl font-bold">Let's Coco Loco!</h1>
+        <UButton to="/reports" class="h-8" size="lg">Reports</UButton to="/">
         <UButton to="/" class="h-8" size="lg">Home</UButton to="/">
       </div>
     </template>
