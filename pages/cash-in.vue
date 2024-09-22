@@ -13,7 +13,7 @@
       <!-- Today's Cash In Transactions -->
       <div class="today-transactions">
         <UDivider class="my-8" />
-        <TodaysCashInTransactions />
+        <TodaysTransactions :store="cashInStore" transactionType="Cash In" />
       </div>
       <!-- Recent Cash In Transactions -->
       <div class="recent-transactions">
@@ -27,7 +27,8 @@
 <script setup>
 
 // Reactive data for recent transactions
-const recentTransactions = ref([])
+/* const recentTransactions = ref([]) */
+const cashInStore = useCashInStore()
 
 // Handle form submission
 const handleSubmit = async (formData) => {

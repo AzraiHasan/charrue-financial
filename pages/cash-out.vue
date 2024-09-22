@@ -12,7 +12,7 @@
       <!-- Today's Cash Out Transactions -->
       <div class="today-transactions">
         <UDivider class="my-8" />
-        <TodaysCashOutTransactions />
+        <TodaysTransactions :store="cashOutStore" transactionType="Cash Out" :showCategory="true" />
       </div>
       <!-- Recent Cash Out Transactions -->
       <div class="recent-transactions">
@@ -24,4 +24,5 @@
 </template>
 
 <script setup>
+const cashOutStore = useCashOutStore()
 </script>
