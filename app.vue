@@ -8,6 +8,7 @@
 </template>
 
 <script setup>
+
 // App - wide setup logic can be placed here
 // For example, initializing stores or fetching initial data
 

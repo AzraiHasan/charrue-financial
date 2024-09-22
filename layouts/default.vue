@@ -21,6 +21,7 @@
 </template>
 
 <script setup>
+
 // Layout-wide logic can be placed here
 // For example, fetching user data or setting up navigation guards
 

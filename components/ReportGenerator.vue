@@ -1,7 +1,11 @@
 <!-- components/ReportGenerator.vue -->
 
 <template>
-  <div>
+  <div v-if="isLoading">
+    <h2 class="text-xl font-semibold mb-4">Loading ...</h2>
+    <USkeleton class="min-h-full" />
+  </div>
+  <div v-else>
     <h2 class="text-xl font-semibold mb-4">Available Weekly Reports</h2>
     <ul v-if="availableReports.length > 0">
       <li v-for="(report, index) in availableReports" :key="index">
@@ -11,7 +15,7 @@
         </UButton>
       </li>
     </ul>
-    <p v-else>No reports available yet.</p>
+    <p v-else class="text-xl font-semibold mb-4">No reports available yet.</p>
   </div>
 </template>
 
@@ -26,13 +30,16 @@ const cashOutStore = useCashOutStore()
 
 const availableReports = ref([])
 const isGenerating = ref(false)
+const isLoading = ref(true)
 
 onMounted(async () => {
   try {
     await fetchData()
     generateAvailableReports()
+    isLoading.value = false
   } catch (error) {
     console.error('Failed to load report data:', error)
+    isLoading.value = false
   }
 })
 

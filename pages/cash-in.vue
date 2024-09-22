@@ -20,7 +20,6 @@
 </template>
 
 <script setup>
-import RecentCashInTransactions from '~/components/RecentCashInTransactions.vue';
 
 // Reactive data for recent transactions
 const recentTransactions = ref([])
