@@ -9,6 +9,11 @@
       <!-- Cash Out Form Component -->
       <CashOutForm />
 
+      <!-- Today's Cash Out Transactions -->
+      <div class="today-transactions">
+        <UDivider class="my-8" />
+        <TodaysCashOutTransactions />
+      </div>
       <!-- Recent Cash Out Transactions -->
       <div class="recent-transactions">
         <UDivider class="my-8" />

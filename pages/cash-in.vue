@@ -10,6 +10,11 @@
       <!-- Cash In Form Component -->
       <CashInForm @submit="handleSubmit" />
 
+      <!-- Today's Cash In Transactions -->
+      <div class="today-transactions">
+        <UDivider class="my-8" />
+        <TodaysCashInTransactions />
+      </div>
       <!-- Recent Cash In Transactions -->
       <div class="recent-transactions">
         <UDivider class="my-8" />
