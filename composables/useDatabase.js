@@ -74,10 +74,20 @@ export function useDatabase() {
     return items;
   };
 
+  const updateItem = async (storeName, id, updatedItem) => {
+    const db = await initDB();
+    const tx = db.transaction(storeName, "readwrite");
+    const store = tx.objectStore(storeName);
+    await store.put(updatedItem);
+    await tx.done;
+    console.log(`Item updated successfully in ${storeName}. ID: ${id}`);
+  };
+
   return {
     STORES,
     initDB,
     addItem,
     getAllItems,
+    updateItem,
   };
 }

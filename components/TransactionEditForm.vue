@@ -1,12 +1,13 @@
 <!-- components/TransactionEditForm.vue -->
 <template>
   <UCard class="p-4">
+
     <form @submit.prevent="handleSubmit" class="space-y-4">
-      <!-- <UFormGroup label="Date">
-        <UInput v-model="form.date" type="date" />
-      </UFormGroup> -->
+      <UFormGroup label="Date">
+        <UInput disabled v-model="form.date" type="date" />
+      </UFormGroup>
       <UFormGroup label="Time">
-        <UInput v-model="form.time" type="time" />
+        <UInput disabled v-model="form.time" type="time" />
       </UFormGroup>
       <UFormGroup label="Amount">
         <UInput v-model.number="form.amount" type="number" step="0.01" />
@@ -29,6 +30,7 @@
 import { ref, computed } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, numeric, minValue } from '@vuelidate/validators'
+import { ru } from 'date-fns/locale';
 
 const props = defineProps({
   transaction: {
@@ -61,7 +63,7 @@ const parseDateAndTime = (dateValue) => {
 const { date, time } = parseDateAndTime(props.transaction.date);
 
 const form = ref({
-  /* date: date, */
+  date: date,
   time: time,
   amount: props.transaction.amount || 0,
   category: props.transaction.category || '',

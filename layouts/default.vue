@@ -6,7 +6,7 @@
       <div class="flex justify-between items-center">
         <h1 class="text-2xl font-bold">Let's Coco Loco!</h1>
         <UButton to="/reports" class="h-8" size="lg">Reports</UButton to="/">
-        <UButton to="/" class="h-8" size="lg">Home</UButton to="/">
+        <UButton to="/" class="h-8" size="lg" @click="refreshDashboard">Home</UButton to="/">
       </div>
     </template>
 
@@ -21,7 +21,15 @@
 </template>
 
 <script setup>
+const refreshDashboard = () => {
+  // Set a flag in localStorage to indicate that a refresh is needed
+  localStorage.setItem('dashboardNeedsRefresh', 'true');
 
+  // Only navigate if we're not already on the home page
+  if (router.currentRoute.value.path !== '/') {
+    router.push('/');
+  }
+};
 // Layout-wide logic can be placed here
 // For example, fetching user data or setting up navigation guards
 

@@ -5,7 +5,7 @@ import { ref, computed } from "vue";
 import { useDatabase } from "@/composables/useDatabase";
 
 export const useCashInStore = defineStore("cashIn", () => {
-  const { STORES, addItem, getAllItems } = useDatabase();
+  const { STORES, addItem, getAllItems, updateItem } = useDatabase();
   // State
   const cashInTransactions = ref([]);
   const isLoading = ref(false);
@@ -86,16 +86,38 @@ export const useCashInStore = defineStore("cashIn", () => {
     } finally {
       isLoading.value = false;
     }
-    /* const serializableEntry = serializeData({
-      date: entry.date,
-      amount: Number(entry.amount),
-      notes: entry.notes,
-    });
-    const id = await addItem(STORES.CASH_IN, serializableEntry); */
   };
 
   const updateCashInEntry = async (id, updates) => {
-    // TODO: Implement updating an existing cash in entry
+    if (isLoading.value) return;
+    isLoading.value = true;
+    error.value = null;
+    try {
+      console.log("Updating cash-in entry:", id, updates);
+
+      // Omit the time part from the date string
+      const formattedUpdates = {
+        ...updates,
+        date: updates.date.split("T")[0],
+        id,
+      };
+
+      await updateItem(STORES.CASH_IN, id, formattedUpdates);
+      const index = cashInTransactions.value.findIndex((t) => t.id === id);
+      if (index !== -1) {
+        cashInTransactions.value[index] = {
+          ...cashInTransactions.value[index],
+          ...formattedUpdates,
+        };
+      }
+      console.log("Cash-in entry updated successfully");
+    } catch (err) {
+      error.value = err.message;
+      console.error("Error updating cash-in entry:", err);
+      throw err;
+    } finally {
+      isLoading.value = false;
+    }
   };
 
   const deleteCashInEntry = async (id) => {

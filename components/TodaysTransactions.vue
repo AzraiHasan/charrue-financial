@@ -51,6 +51,7 @@ import { ref, computed, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { formatDate } from '@/utils/dateHelpers'
 import TransactionEditForm from './TransactionEditForm.vue'
+import { useNotificationStore } from '@/stores/notificationStore'
 
 const props = defineProps({
   store: {
@@ -112,26 +113,31 @@ const handleEdit = (transaction) => {
   isEditModalOpen.value = true
 }
 
+const notificationStore = useNotificationStore()
+
 const handleUpdate = async (updatedTransaction) => {
   try {
     if (props.transactionType === 'Cash In') {
-      await props.store.updateCashInEntry(updatedTransaction.id, updatedTransaction)
+      await props.store.updateCashInEntry(updatedTransaction.id, updatedTransaction);
     } else {
-      await props.store.updateCashOutEntry(updatedTransaction.id, updatedTransaction)
+      await props.store.updateCashOutEntry(updatedTransaction.id, updatedTransaction);
     }
-    isEditModalOpen.value = false
-    editingTransaction.value = null
+    isEditModalOpen.value = false;
+    editingTransaction.value = null;
     // Refresh the transactions
     if (props.transactionType === 'Cash In') {
-      await props.store.fetchCashInEntries(true)
+      await props.store.fetchCashInEntries(true);
     } else {
-      await props.store.fetchCashOutEntries(true)
+      await props.store.fetchCashOutEntries(true);
     }
+    // Show success notification
+    notificationStore.add({ message: 'Transaction updated successfully', type: 'success' });
   } catch (error) {
-    console.error('Error updating transaction:', error)
-    // Handle error (e.g., show error message to user)
+    console.error('Error updating transaction:', error);
+    // Show error notification
+    notificationStore.add({ message: 'Failed to update transaction', type: 'error' });
   }
-}
+};
 
 onMounted(async () => {
   if (props.transactionType === 'Cash In') {
