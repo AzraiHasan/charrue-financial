@@ -18,31 +18,36 @@ export const useMyStore = defineStore("myStore", {
         this.transactions = transactions;
       }
     },
-    async addTransaction(transaction) {
-      if (process.client) {
-        const newTransaction = await addTransaction(transaction);
-        if (newTransaction) {
-          this.transactions.push(newTransaction);
-        }
-      } else {
-        // Fallback for server-side
-        this.transactions.push({ ...transaction, id: Date.now() });
-      }
+    addTransaction(transaction) {
+      const newTransaction = {
+        ...JSON.parse(JSON.stringify(transaction)),
+        id: Date.now().toString(),
+        synced: false,
+      };
+      this.transactions.push(newTransaction);
     },
-    async updateTransaction(transaction) {
-      if (process.client) {
-        await updateTransaction(transaction);
-      }
+    updateTransaction(transaction) {
       const index = this.transactions.findIndex((t) => t.id === transaction.id);
       if (index !== -1) {
-        this.transactions[index] = transaction;
+        this.transactions[index] = {
+          ...JSON.parse(JSON.stringify(transaction)),
+          synced: false,
+        };
       }
     },
-    async deleteTransaction(id) {
-      if (process.client) {
-        await deleteTransaction(id);
-      }
+    deleteTransaction(id) {
       this.transactions = this.transactions.filter((t) => t.id !== id);
     },
+    async syncToIndexedDB() {
+      if (process.client) {
+        for (const transaction of this.transactions) {
+          if (!transaction.synced) {
+            await addTransaction(transaction);
+            transaction.synced = true;
+          }
+        }
+      }
+    },
   },
+  persist: true,
 });

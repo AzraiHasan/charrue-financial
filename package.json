@@ -5,6 +5,7 @@
     "@pinia/nuxt": "^0.5.4",
     "idb": "^8.0.0",
     "nuxt": "^3.13.0",
+    "pinia-plugin-persistedstate": "^4.0.2",
     "vue": "latest",
     "vue-router": "latest"
   },

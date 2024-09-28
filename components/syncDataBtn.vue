@@ -13,8 +13,5 @@ const syncData = () => {
   store.syncToIndexedDB()
 }
 
-return {
-  syncData,
-}
 
 </script>
