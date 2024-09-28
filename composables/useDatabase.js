@@ -6,7 +6,7 @@ let dbInitialized = false;
 let dbInstance = null;
 
 export function useDatabase() {
-  const DB_NAME = "CoconutShakeFinancialTracker";
+  const DB_NAME = "CoconutTracker";
   const DB_VERSION = 1;
   const STORES = {
     CASH_IN: "cashIn",
@@ -74,10 +74,15 @@ export function useDatabase() {
     return items;
   };
 
+  const addCashIn = async (entry) => {
+    return addItem(STORES.CASH_IN, entry);
+  };
+
   return {
     STORES,
     initDB,
     addItem,
     getAllItems,
+    addCashIn,
   };
 }
