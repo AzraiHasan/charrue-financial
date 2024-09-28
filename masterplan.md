@@ -1,140 +1,131 @@
-# Masterplan: Coconut Shake Stall Financial Tracker
+# Modified Masterplan: Coconut Shake Stall Financial Tracker with Pinia
 
-## App Overview and Objectives
+## Modifications to Technical Stack
 
-The Coconut Shake Stall Financial Tracker is a web-based application designed to help a small business owner manage and track the cashflow of their roadside coconut shake stall. The primary objectives are:
+1. Frontend:
+   - Nuxt.js as the primary framework
+   - Pinia for state management
+   - HTML5 for structure
+   - JavaScript for interactivity
+   - Chart.js for data visualization
+   - Nuxt UI for styling
 
-1. Track daily cash inflow
-2. Record weekly expenses with categorization
-3. Provide visual representations of financial data
-4. Offer insights through reporting and analysis
+2. Backend:
+   - IndexedDB for persistent local data storage
 
-The app aims to be simple, user-friendly, and focused on essential financial management tasks for a small-scale business.
+3. Application Type:
+   - Single-page application (SPA) built with Vue.js
+   - Progressive Web App (PWA) capabilities in future iterations
 
-## Target Audience
+## State Management with Pinia
 
-- Small business owner (coconut shake stall operator)
-- Potentially expandable to other small-scale food and beverage businesses
+1. Pinia Stores:
+   - CashInStore
+   - CashOutStore
+   - CategoryStore
+   - ThresholdStore
+   - DashboardStore (for computed values and aggregations)
+
+2. Store Structure (example for CashInStore):
+   ```javascript
+   export const useCashInStore = defineStore('cashIn', {
+     state: () => ({
+       entries: [],
+       isDirty: false
+     }),
+     actions: {
+       addEntry(entry) {
+         this.entries.push(entry);
+         this.isDirty = true;
+       },
+       updateEntry(id, updatedEntry) {
+         const index = this.entries.findIndex(e => e.id === id);
+         if (index !== -1) {
+           this.entries[index] = updatedEntry;
+           this.isDirty = true;
+         }
+       },
+       async syncWithIndexedDB() {
+         if (this.isDirty) {
+           // Logic to update IndexedDB
+           // ...
+           this.isDirty = false;
+         }
+       }
+     },
+     getters: {
+       totalCashIn: (state) => state.entries.reduce((sum, entry) => sum + entry.amount, 0)
+     }
+   });
+   ```
+
+3. Manual Trigger for IndexedDB Updates:
+   - Implement a "Save" or "Sync" button in the UI
+   - On click, call the `syncWithIndexedDB` action for all stores
 
 ## Core Features and Functionality
 
 1. Cash-In Tracking:
-   - Manual entry of daily income
-   - Date and amount recording
-   - Editable during review, locked after confirmation
+   - Use CashInStore for real-time state management
+   - Manual entry updates Pinia store immediately
+   - IndexedDB update triggered manually
 
 2. Cash-Out Tracking:
-   - Manual entry of weekly expenses
-   - Basic and custom categorization
-   - Ability to add notes and attach receipts
+   - Use CashOutStore and CategoryStore for real-time state management
+   - Manual entry and categorization update Pinia stores immediately
+   - IndexedDB update triggered manually
 
 3. Dashboard:
-   - Chart displaying cash-in vs cash-out
-   - Single threshold indicator for supply investment
-   - Running total of cash-in-hand
-   - Total amount of cash-out by category per week
+   - Use DashboardStore for computed values and aggregations
+   - Real-time updates based on CashInStore and CashOutStore changes
 
 4. Reporting and Analysis:
-   - Weekly trend analysis
-   - Monthly and yearly summaries of income vs. expenses
-   - Breakdown of expenses by category (amounts and percentages)
+   - Generate reports based on Pinia store data
+   - Ensure data consistency by syncing with IndexedDB before generating reports
 
 5. Data Export:
-   - Ability to export financial data to CSV format
-
-## High-level Technical Stack Recommendations
-
-1. Frontend:
-   - HTML5 for structure
-   - JavaScript for interactivity
-   - Chart.js for data visualization
-   - (Future consideration: CSS framework for styling)
-
-2. Backend:
-   - IndexedDB for local data storage
-
-3. Application Type:
-   - Single-page application (SPA)
-   - Progressive Web App (PWA) capabilities in future iterations
-
-## Conceptual Data Model
-
-1. CashIn:
-   - id (auto-generated)
-   - date
-   - amount
-
-2. CashOut:
-   - id (auto-generated)
-   - date
-   - amount
-   - category
-   - notes
-   - receiptAttachment (future consideration)
-
-3. Category:
-   - id (auto-generated)
-   - name
-
-4. Threshold:
-   - id (auto-generated)
-   - amount
-
-## User Interface Design Principles
-
-1. Minimalist design focusing on functionality
-2. Intuitive navigation between main sections (Cash-In, Cash-Out, Dashboard, Reports)
-3. Clear and readable data presentation
-4. Mobile-responsive layout for use on various devices
-
-## Security Considerations
-
-1. Implement data validation for all input fields
-2. Ensure secure local storage of financial data
-3. (Future consideration) Implement user authentication for multi-user access
+   - Export data from Pinia stores
+   - Ensure sync with IndexedDB before exporting
 
 ## Development Phases and Milestones
 
-Phase 1: Core Functionality
-1. Set up project structure and IndexedDB
-2. Implement Cash-In tracking
-3. Implement Cash-Out tracking with basic categories
-4. Create basic dashboard with Chart.js integration
+Phase 1: Core Functionality and Pinia Integration
+1. Set up project structure with Nuxt.js and Pinia
+2. Implement Pinia stores for Cash-In, Cash-Out, and Categories
+3. Create UI components for data entry and basic dashboard
+4. Implement manual trigger for IndexedDB synchronization
 
-Phase 2: Enhanced Features
-1. Implement custom categories for Cash-Out
-2. Add note and receipt attachment functionality to Cash-Out
-3. Enhance dashboard with threshold indicator and running total
-4. Develop weekly trend analysis
+Phase 2: Enhanced Features and Store Interactions
+1. Implement custom categories in CategoryStore
+2. Add note functionality to CashOutStore
+3. Enhance dashboard with DashboardStore for computed values
+4. Develop weekly trend analysis using Pinia getters
 
-Phase 3: Reporting and Data Management
-1. Implement monthly and yearly summary reports
-2. Create expense breakdown reports
-3. Develop data export functionality to CSV
+Phase 3: Reporting, Data Management, and IndexedDB Integration
+1. List available weekly report (Monday to Sunday) from IndexedDB (latest update is set to yesterday)
+2. Download selected weekly report (csv format) directly onto user's device. Don't save in the app
 
 Phase 4: Optimization and Future-Proofing
-1. Refactor and optimize code
-2. Implement offline functionality for PWA
+1. Refactor and optimize Pinia store interactions
+2. Implement offline functionality for PWA using Pinia and IndexedDB
 3. Enhance UI with chosen CSS framework
-4. (Optional) Begin implementation of inventory tracking or sales forecasting
+4. (Optional) Begin implementation of inventory tracking or sales forecasting with dedicated Pinia stores
 
 ## Potential Challenges and Solutions
 
-1. Challenge: Ensuring data integrity with local storage
-   Solution: Implement robust error handling and data validation
+1. Challenge: Ensuring data consistency between Pinia stores and IndexedDB
+   Solution: Implement robust synchronization logic and error handling in the manual trigger process
 
-2. Challenge: Maintaining performance with growing dataset
-   Solution: Implement efficient querying and consider data archiving for older records
+2. Challenge: Managing complex state interactions between multiple Pinia stores
+   Solution: Utilize Pinia's composition API and create a root store if necessary for global state management
 
-3. Challenge: Future transition to multi-device synchronization
-   Solution: Design data models and storage with future cloud integration in mind
+3. Challenge: Optimizing performance with large datasets in Pinia stores
+   Solution: Implement pagination or lazy loading strategies for large datasets, keeping only necessary data in memory
 
 ## Future Expansion Possibilities
 
-1. Inventory tracking system
-2. Sales forecasting based on historical data
-3. Multi-user access with cloud synchronization
-4. Integration with point-of-sale systems
-5. Expansion to other small business types with customizable categories and reports
+1. Real-time multi-device synchronization using Pinia and a backend service
+2. Implement undo/redo functionality leveraging Pinia's state management capabilities
+3. Develop more sophisticated analytics and forecasting features using Pinia's reactive state
 
-This masterplan provides a comprehensive blueprint for the development of your Coconut Shake Stall Financial Tracker. It outlines the core features, technical considerations, and a phased approach to building your application. As development progresses, this plan can be adjusted to accommodate new insights or changing requirements.
+This modified masterplan incorporates Pinia for state management while maintaining IndexedDB for persistent storage. The manual trigger for IndexedDB updates allows for better control over data persistence and can potentially improve performance by reducing write operations to IndexedDB.
